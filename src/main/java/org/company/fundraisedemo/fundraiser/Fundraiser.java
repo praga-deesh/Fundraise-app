@@ -71,4 +71,6 @@ public class Fundraiser {
     public void setPosts(List<Post> posts) {
         this.posts = posts;
     }
+
+    // changes made by Rishi
 }
