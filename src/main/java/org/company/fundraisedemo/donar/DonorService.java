@@ -3,7 +3,7 @@ package org.company.fundraisedemo.donar;
 import java.util.List;
 
 public interface DonorService {
-    
+
     Donor createDonorProfile(Donor newDonor) throws DonorExceptions;
 
     Donor loginDonorProfile(String email, String password) throws DonorExceptions;
