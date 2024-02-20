@@ -80,7 +80,7 @@ public class DonorServiceImpl implements DonorService
         if(accountOpt.isEmpty())
             throw new DonorExceptions("Profile doesn't exists:"+id);
         this.donorRepositoryDao.deleteById(id);
-        return "Profile deleted successfully!!!";
+        return "Profile deleted successfully!!";
     }
 
 }
