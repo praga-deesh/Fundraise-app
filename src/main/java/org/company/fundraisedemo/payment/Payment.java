@@ -17,6 +17,8 @@ public class Payment {
     private LocalDateTime paymentDate;
     private String status;
 
+    private String comment;
+
     @ManyToOne
     private Donor donors;
 
@@ -80,4 +82,6 @@ public class Payment {
     public void setDonors(Donor donors) {
         this.donors = donors;
     }
+
+
 }
