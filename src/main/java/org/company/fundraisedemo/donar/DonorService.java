@@ -16,4 +16,6 @@ public interface DonorService {
     Donor updateDonorEmail(Integer id,String newEmail) throws DonorExceptions;
 
     Donor updateDonorPasswordById(Integer id,String newPassword) throws DonorExceptions;
+
+    String deleteDonorById(Integer id) throws DonorExceptions;
 }

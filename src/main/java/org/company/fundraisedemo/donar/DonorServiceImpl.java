@@ -74,4 +74,13 @@ public class DonorServiceImpl implements DonorService
         return foundDonor;
     }
 
+    @Override
+    public String deleteDonorById(Integer id) throws DonorExceptions {
+        Optional<Donor> accountOpt=this.donorRepositoryDao.findById(id);
+        if(accountOpt.isEmpty())
+            throw new DonorExceptions("Profile doesn't exists:"+id);
+        this.donorRepositoryDao.deleteById(id);
+        return "Profile deleted successfully!!!";
+    }
+
 }

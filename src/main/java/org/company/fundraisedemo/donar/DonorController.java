@@ -37,11 +37,10 @@ public class DonorController {
         return this.donorService.updateDonorPasswordById(id,donorLoginDto.getPassword());
     }
 
-//    @DeleteMapping("donor/delete")
-//    public String deleteDonor(Integer id)
-//    {
-//        return this.donorService.deleteDonorById(id);
-//    }
+    @DeleteMapping("donor/delete")
+    public String deleteDonor(Integer id) throws DonorExceptions {
+        return this.donorService.deleteDonorById(id);
+    }
 
 //    @GetMapping("donar/posts")
 //    public void viewPosts()
