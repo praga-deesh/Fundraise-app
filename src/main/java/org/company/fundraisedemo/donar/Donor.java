@@ -17,7 +17,7 @@ public class Donor {
     private String name;
     private String email;
     private String password;
-
+//abvsdhgwevfhj
     @OneToMany
     private List<Payment> donationHistory;
 
