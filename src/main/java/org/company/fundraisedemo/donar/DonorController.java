@@ -8,7 +8,7 @@ import java.util.List;
 public class DonorController {
     @Autowired
     private DonorService donorService;
-//ashhh
+
     @PostMapping("donor/createNewProfile")
     public Donor createDonor(@RequestBody Donor newDonor) throws DonorExceptions {
         return this.donorService.createDonorProfile(newDonor);
@@ -41,20 +41,4 @@ public class DonorController {
         return this.donorService.deleteDonorById(id);
     }
 
-//    @GetMapping("donar/posts")
-//    public void viewPosts()
-//    {
-//        return
-//    }
-//
-//    @PostMapping("donor/donate")
-//    public void donate()
-//{
-//
-//}
-//    @GetMapping("donor/donationHistory")
-//    public List<Double> viewDonationHistoryById(Integer id)
-//    {
-//        return this.donorService.viewDonationHistoryById(id);
-//    }
 }
