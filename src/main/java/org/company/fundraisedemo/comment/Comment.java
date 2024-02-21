@@ -16,7 +16,6 @@ public class Comment {
     private Integer donorId;
 
     private String commentDescription;
-
     public Comment() {
     }
 
