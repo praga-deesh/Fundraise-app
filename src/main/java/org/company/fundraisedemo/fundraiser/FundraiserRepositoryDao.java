@@ -1,4 +1,6 @@
 package org.company.fundraisedemo.fundraiser;
 
-public interface FundraiserRepositoryDao {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface FundraiserRepositoryDao extends JpaRepository<Fundraiser,Integer> {
 }
