@@ -7,7 +7,7 @@ public interface CommentService {
     public Comment deleteCommentById(Integer commentId) throws CommentException;
     public Comment updateComment(Comment comment) throws CommentException;
     public Comment getCommentById(Integer commentId) throws CommentException;
-    public List<String> getComments(Integer postId) throws CommentException;
+    public List<Comment> getComments(Integer postId) throws CommentException;
 
 
 
