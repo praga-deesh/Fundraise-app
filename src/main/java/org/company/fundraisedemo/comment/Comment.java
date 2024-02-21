@@ -15,14 +15,17 @@ public class Comment {
     private Integer id;
     private Integer donorId;
 
+    private Integer postId;
     private String commentDescription;
+
 
     public Comment() {
     }
 
-    public Comment(Integer id, Integer donorId, String commentDescription) {
+    public Comment(Integer id, Integer donorId, Integer postId, String commentDescription) {
         this.id = id;
         this.donorId = donorId;
+        this.postId = postId;
         this.commentDescription = commentDescription;
     }
 
@@ -48,5 +51,13 @@ public class Comment {
 
     public void setCommentDescription(String commentDescription) {
         this.commentDescription = commentDescription;
+    }
+
+    public Integer getPostId() {
+        return postId;
+    }
+
+    public void setPostId(Integer postId) {
+        this.postId = postId;
     }
 }

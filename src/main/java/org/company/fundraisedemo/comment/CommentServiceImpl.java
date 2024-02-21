@@ -1,5 +1,7 @@
 package org.company.fundraisedemo.comment;
 
+import org.company.fundraisedemo.post.Post;
+import org.company.fundraisedemo.post.PostExceptions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -52,8 +54,15 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<String> getComments(Integer postId) throws CommentException {
-        return null;
+    public List<Comment> getComments(Integer postId) throws CommentException {
+        List<Comment> commentList=this.commentRepositoryDao.findAll();
+        commentList = (List<Comment>) commentList.stream().map((p)->p.getPostId().equals(postId));
+        if(commentList.isEmpty())
+            throw new CommentException("Post doesn't exists:");
+        return commentList;
+
+
+
     }
 
 
