@@ -1,6 +1,7 @@
 package org.company.fundraisedemo.post;
 
 import jakarta.persistence.*;
+import org.company.fundraisedemo.comment.Comment;
 import org.company.fundraisedemo.fundraiser.Fundraiser;
 import org.company.fundraisedemo.payment.Payment;
 
@@ -15,7 +16,7 @@ public class Post {
     private Integer id;
 
     private String description;
-    private String catergory;
+    private String category;
     private LocalDate startDate;
     private LocalDate endDate;
     private Double amountRequested;
@@ -29,13 +30,16 @@ public class Post {
     @OneToMany
     private List<Payment> donations;
 
+    @OneToMany
+    private List<Comment> comments;
+
     public Post() {
     }
 
-    public Post(Integer id, String description,String category , LocalDate startDate, LocalDate endDate, Double amountRequested, Double amountCollected, String status, Fundraiser fundraiser, List<Payment> donations) {
+    public Post(Integer id, String description, String catergory, LocalDate startDate, LocalDate endDate, Double amountRequested, Double amountCollected, String status, Fundraiser fundraiser, List<Payment> donations, List<Comment> comments) {
         this.id = id;
         this.description = description;
-        this.catergory = category;
+        this.category = category;
         this.startDate = startDate;
         this.endDate = endDate;
         this.amountRequested = amountRequested;
@@ -43,7 +47,7 @@ public class Post {
         this.status = status;
         this.fundraiser = fundraiser;
         this.donations = donations;
-
+        this.comments = comments;
     }
 
     public Integer getId() {
@@ -118,11 +122,19 @@ public class Post {
         this.donations = donations;
     }
 
-    public String getCatergory() {
-        return catergory;
+    public String getCategory() {
+        return category;
     }
 
-    public void setCatergory(String catergory) {
-        this.catergory = catergory;
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 }
