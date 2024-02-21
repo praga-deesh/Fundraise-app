@@ -46,11 +46,15 @@ public class PostServiceImpl implements PostService{
 
     @Override
     public List<Post> getPostsByFundraiserId(Integer fundraiserId) throws PostExceptions {
-        List<Post> postList=this.postRepositoryDao.findAll();
-        postList = (List<Post>) postList.stream().map((p)->p.getFundraiser().getId().equals(fundraiserId));
-        if(postList.isEmpty())
-            throw new PostExceptions("Post doesn't exists:"+fundraiserId);
+//        List<Post> postList=this.postRepositoryDao.findAll();
+//        postList = (List<Post>) postList.stream().map((p)->p.getFundraiser().getId().equals(fundraiserId));
+//        if(postList.isEmpty())
+//            throw new PostExceptions("Post doesn't exists:"+fundraiserId);
+//        return postList;
+        List<Post> postList = postRepositoryDao.findAll();
+        postList = postList.stream().filter((p)->p.getFundraiser().getId().equals(fundraiserId)).toList();
         return postList;
+
     }
 
     @Override
@@ -74,7 +78,7 @@ public class PostServiceImpl implements PostService{
     @Override
     public List<Post> getPostsByCategory(String category) throws PostExceptions {
         List<Post> postList=this.postRepositoryDao.findAll();
-        postList = (List<Post>) postList.stream().filter((p)->p.getCatergory().equals(category));
+        postList = (List<Post>) postList.stream().filter((p)->p.getCategory().equals(category));
         if(postList.isEmpty())
             throw new PostExceptions("No Posts are in this Category");
         return postList;
