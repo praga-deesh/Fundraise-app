@@ -1,9 +1,6 @@
 package org.company.fundraisedemo.donar;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import org.company.fundraisedemo.payment.Payment;
 
 import java.util.List;
@@ -19,6 +16,7 @@ public class Donor {
     private String password;
 
     @OneToMany
+    @Column(nullable = true)
     private List<Payment> donationHistory;
 
     public Donor(Integer id, String name, String email, String password, List<Payment> donationHistory) {
