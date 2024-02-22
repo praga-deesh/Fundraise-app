@@ -1,6 +1,6 @@
 package org.company.fundraisedemo.donar;
 
-//import org.company.fundraisedemo.comment.CommentService;
+import org.company.fundraisedemo.comment.CommentService;
 
 
 import org.company.fundraisedemo.post.Post;
@@ -14,8 +14,8 @@ import java.util.List;
 
 @RestController
 public class DonorController {
-//    @Autowired
-//    private CommentService commentService;
+    @Autowired
+    private CommentService commentService;
     @Autowired
     private DonorService donorService;
 
