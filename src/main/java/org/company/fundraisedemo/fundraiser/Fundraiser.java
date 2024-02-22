@@ -1,9 +1,6 @@
 package org.company.fundraisedemo.fundraiser;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import org.company.fundraisedemo.post.Post;
 
 import java.util.List;
@@ -19,6 +16,7 @@ public class Fundraiser {
     private String password;
 
     @OneToMany
+    @Column(nullable = true)
     private List<Post> posts;
 
     public Fundraiser() {
@@ -30,6 +28,12 @@ public class Fundraiser {
         this.email = email;
         this.password = password;
         this.posts = posts;
+    }
+
+    public Fundraiser(String name, String email, String password) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
     }
 
     public Integer getId() {
