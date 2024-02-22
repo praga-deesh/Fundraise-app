@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class PostServiceImpl implements PostService{
@@ -41,19 +40,16 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public List<Post> getAllPosts() {
+    public List<Post> getAllPosts() throws PostExceptions{
         return this.postRepositoryDao.findAll();
     }
 
     @Override
     public List<Post> getPostsByFundraiserId(Integer fundraiserId) throws PostExceptions {
-//        List<Post> postList=this.postRepositoryDao.findAll();
-//        postList = (List<Post>) postList.stream().map((p)->p.getFundraiser().getId().equals(fundraiserId));
-//        if(postList.isEmpty())
-//            throw new PostExceptions("Post doesn't exists:"+fundraiserId);
-//        return postList;
         List<Post> postList = postRepositoryDao.findAll();
         postList = postList.stream().filter((p)->p.getFundraiser().getId().equals(fundraiserId)).toList();
+        if(postList.isEmpty())
+            throw new PostExceptions("Post doesn't exists:"+fundraiserId);
         return postList;
 
     }
@@ -61,7 +57,7 @@ public class PostServiceImpl implements PostService{
     @Override
     public List<Post> getCompletedPosts() throws PostExceptions {
         List<Post> postList=this.postRepositoryDao.findAll();
-        postList = (List<Post>) postList.stream().filter((p)->p.getStatus().equals("completed"));
+        postList = postList.stream().filter((p)->p.getStatus().equals("completed")).toList();
         if(postList.isEmpty())
             throw new PostExceptions("No Posts have Completed Status");
         return postList;
@@ -70,7 +66,7 @@ public class PostServiceImpl implements PostService{
     @Override
     public List<Post> getIncompletePosts() throws PostExceptions {
         List<Post> postList=this.postRepositoryDao.findAll();
-        postList = (List<Post>) postList.stream().filter((p)->p.getStatus().equals("incomplete"));
+        postList = postList.stream().filter((p)->p.getStatus().equals("incomplete")).toList();
         if(postList.isEmpty())
             throw new PostExceptions("No Posts have InCompleted Status");
         return postList;
@@ -79,7 +75,7 @@ public class PostServiceImpl implements PostService{
     @Override
     public List<Post> getPostsByCategory(String category) throws PostExceptions {
         List<Post> postList=this.postRepositoryDao.findAll();
-        postList = (List<Post>) postList.stream().filter((p)->p.getCategory().equals(category));
+        postList = postList.stream().filter((p)->p.getCategory().equals(category)).toList();
         if(postList.isEmpty())
             throw new PostExceptions("No Posts are in this Category");
         return postList;
