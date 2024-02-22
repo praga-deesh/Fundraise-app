@@ -15,4 +15,10 @@ public interface PostService {
     List<Post> getIncompletePosts()throws PostExceptions;
 
     List<Post> getPostsByCategory(String category)throws PostExceptions;
+
+    List<Post> getPostsByTitle(String title) throws PostExceptions;
+
+    List<Post> getPostById(Integer postId) throws PostExceptions;
+
+
 }

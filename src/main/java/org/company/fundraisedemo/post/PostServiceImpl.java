@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class PostServiceImpl implements PostService{
@@ -83,4 +84,28 @@ public class PostServiceImpl implements PostService{
             throw new PostExceptions("No Posts are in this Category");
         return postList;
     }
+
+    @Override
+    public List<Post> getPostsByTitle(String title) throws PostExceptions {
+        List<Post> postList = postRepositoryDao.findAll();
+        List<Post> filteredList = postList.stream().filter(post -> post.getTitle().equalsIgnoreCase(title)).toList();
+        if (postList.isEmpty())
+            throw new PostExceptions("No Posts found with title containing: " + title);
+        return filteredList;
+    }
+
+
+
+    @Override
+    public List<Post> getPostById(Integer postId) throws PostExceptions {
+         List<Post> allPost=postRepositoryDao.findAll();
+         List<Post> result=allPost.stream().filter(post->post.getId().equals(postId)).toList();
+         if(result.isEmpty()){
+             throw new PostExceptions("Post Not Found:"+postId);
+         }
+        return result;
+    }
+
+
+
 }

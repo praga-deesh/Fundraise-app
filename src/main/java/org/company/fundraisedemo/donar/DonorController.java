@@ -1,5 +1,8 @@
 package org.company.fundraisedemo.donar;
 
+import org.company.fundraisedemo.post.Post;
+import org.company.fundraisedemo.post.PostExceptions;
+import org.company.fundraisedemo.post.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -8,6 +11,8 @@ import java.util.List;
 public class DonorController {
     @Autowired
     private DonorService donorService;
+    @Autowired
+    private PostService postService;
 //ashhh
     @PostMapping("donor/createNewProfile")
     public Donor createDonor(@RequestBody Donor newDonor) throws DonorExceptions {
@@ -41,10 +46,16 @@ public class DonorController {
         return this.donorService.deleteDonorById(id);
     }
 
-//    @GetMapping("donar/posts")
-//    public void viewPosts()
-//    {
-//        return
+    @GetMapping("donar/posts/{postId}")
+    public List<Post> getPostById(@PathVariable Integer postId) throws PostExceptions {
+        return postService.getPostById(postId);
+
+    }
+    @GetMapping("donor/postsByTitle/{title}")
+    public List<Post> getPostsByTitle(@PathVariable String title) throws PostExceptions{
+        return postService.getPostsByTitle(title);
+    }
+//
 //    }
 //
 //    @PostMapping("donor/donate")
