@@ -13,6 +13,7 @@ import java.util.Optional;
 
 @Service
 public class CommentServiceImpl implements CommentService {
+    private String errorMessage="Comment doesn't exist";
     @Autowired
     private CommentRepositoryDao commentRepositoryDao;
     @Override
@@ -24,7 +25,7 @@ public class CommentServiceImpl implements CommentService {
     public Comment deleteCommentById(Integer commentId) throws CommentException{
         Optional<Comment> commentOpt=this.commentRepositoryDao.findById(commentId);
         if(!commentOpt.isPresent())
-            throw new CommentException("Comment doesn't exits:");
+            throw new CommentException(errorMessage);
 
 
         commentRepositoryDao.deleteById(commentId);
@@ -36,7 +37,7 @@ public class CommentServiceImpl implements CommentService {
     public Comment updateComment(Comment comment) throws CommentException{
         Optional<Comment> commentOpt=this.commentRepositoryDao.findById(comment.getId());
         if(!commentOpt.isPresent())
-            throw new CommentException("Comment doesn't exits:");
+            throw new CommentException(errorMessage);
 
         this.commentRepositoryDao.save(comment);
         return commentOpt.get();
@@ -46,7 +47,7 @@ public class CommentServiceImpl implements CommentService {
     public Comment getCommentById(Integer commentId) throws  CommentException{
         Optional<Comment> commentOpt=this.commentRepositoryDao.findById(commentId);
         if(!commentOpt.isPresent())
-            throw new CommentException("Comment doesn't exits:");
+            throw new CommentException(errorMessage);
 
 
         return commentOpt.get();
