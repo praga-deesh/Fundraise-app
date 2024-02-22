@@ -11,13 +11,10 @@ import java.util.List;
 public class DonorController {
     @Autowired
     private DonorService donorService;
-<<<<<<< HEAD
 
-=======
     @Autowired
     private PostService postService;
-//ashhh
->>>>>>> 13758b14df6f197b06cd411f68c080720c38c6e8
+
     @PostMapping("donor/createNewProfile")
     public Donor createDonor(@RequestBody Donor newDonor) throws DonorExceptions {
         return this.donorService.createDonorProfile(newDonor);
@@ -50,8 +47,6 @@ public class DonorController {
         return this.donorService.deleteDonorById(id);
     }
 
-<<<<<<< HEAD
-=======
     @GetMapping("donar/getAllPosts")
     public List<Post> getAllPosts() throws PostExceptions {
         return postService.getAllPosts();
@@ -80,18 +75,5 @@ public class DonorController {
     public List<Post> getPostsByCategory(@PathVariable String category) throws PostExceptions {
         return postService.getPostsByCategory(category);
     }
-//
-//    }
-//
-//    @PostMapping("donor/donate")
-//    public void donate()
-//{
-//
-//}
-//    @GetMapping("donor/donationHistory")
-//    public List<Double> viewDonationHistoryById(Integer id)
-//    {
-//        return this.donorService.viewDonationHistoryById(id);
-//    }
->>>>>>> 13758b14df6f197b06cd411f68c080720c38c6e8
+
 }

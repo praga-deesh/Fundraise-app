@@ -10,7 +10,6 @@ public interface DonorService {
 
     Donor viewDonorById(Integer id) throws DonorExceptions;
 
-
     Donor updateDonorNameById(Integer id,String newName) throws DonorExceptions;
 
     Donor updateDonorEmail(Integer id,String newEmail) throws DonorExceptions;
