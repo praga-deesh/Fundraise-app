@@ -1,7 +1,7 @@
 package org.company.fundraisedemo.fundraiser;
 
-import org.company.fundraisedemo.donar.Donor;
 
 public interface FundraiserService {
-    Fundraiser createFunraiser(Fundraiser newFundraiser);
+    Fundraiser createFundraiserProfile(Fundraiser newFundraiser) throws FundraiserExceptions;
+    Fundraiser loginFundraiserProfile(String email, String password) throws FundraiserExceptions;
 }

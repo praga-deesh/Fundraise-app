@@ -21,7 +21,7 @@ public class DonorController {
 
     @Autowired
     private PostService postService;
-//ashhh
+
 
     @PostMapping("donor/createNewProfile")
     public Donor createDonor(@RequestBody Donor newDonor) throws DonorExceptions {
