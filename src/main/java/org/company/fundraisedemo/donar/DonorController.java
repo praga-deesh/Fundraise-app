@@ -11,9 +11,10 @@ import java.util.List;
 public class DonorController {
     @Autowired
     private DonorService donorService;
+
     @Autowired
     private PostService postService;
-//ashhh
+
     @PostMapping("donor/createNewProfile")
     public Donor createDonor(@RequestBody Donor newDonor) throws DonorExceptions {
         return this.donorService.createDonorProfile(newDonor);
@@ -74,17 +75,5 @@ public class DonorController {
     public List<Post> getPostsByCategory(@PathVariable String category) throws PostExceptions {
         return postService.getPostsByCategory(category);
     }
-//
-//    }
-//
-//    @PostMapping("donor/donate")
-//    public void donate()
-//{
-//
-//}
-//    @GetMapping("donor/donationHistory")
-//    public List<Double> viewDonationHistoryById(Integer id)
-//    {
-//        return this.donorService.viewDonationHistoryById(id);
-//    }
+
 }
