@@ -1,6 +1,5 @@
 package org.company.fundraisedemo.donar;
 
-import java.util.List;
 
 public interface DonorService {
 

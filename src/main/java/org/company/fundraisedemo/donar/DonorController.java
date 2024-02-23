@@ -1,19 +1,27 @@
 package org.company.fundraisedemo.donar;
 
+import org.company.fundraisedemo.comment.CommentService;
+
+
 import org.company.fundraisedemo.post.Post;
 import org.company.fundraisedemo.post.PostExceptions;
 import org.company.fundraisedemo.post.PostService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 @RestController
 public class DonorController {
+    @Autowired
+    private CommentService commentService;
     @Autowired
     private DonorService donorService;
 
     @Autowired
     private PostService postService;
+
 
     @PostMapping("donor/createNewProfile")
     public Donor createDonor(@RequestBody Donor newDonor) throws DonorExceptions {
