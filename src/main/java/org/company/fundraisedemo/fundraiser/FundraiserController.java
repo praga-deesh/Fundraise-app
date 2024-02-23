@@ -31,29 +31,52 @@ public class FundraiserController {
         return this.fundraiserService.loginFundraiserProfile(fundraiserLoginDto.getEmail(),fundraiserLoginDto.getPassword());
     }
 
-
-
-
-
-
-    @PostMapping("fundraiser/addNewPost")
-    public Post addNewPost(@RequestBody Post newPost) throws PostExceptions {
-        return this.postService.addNewPost(newPost);
+    @GetMapping("fundraiser")
+    public Fundraiser viewFundraiser(Integer id) throws FundraiserExceptions {
+        return this.fundraiserService.viewFundraiserById(id);
     }
 
-    @PutMapping("fundraiser/updatePost")
-    public Post updatePost(@RequestBody Post updatePost) throws PostExceptions {
-        return this.postService.updatePost(updatePost);
+    @PatchMapping("fundraiser/updateName")
+    public Fundraiser updateFundraiserName(Integer id,String newName) throws FundraiserExceptions {
+        return this.fundraiserService.updateFundraiserNameById(id,newName);
     }
 
-    @DeleteMapping("fundraiser/deletePost/{id}")
-    public Post deletePostById(Integer id) throws PostExceptions {
-        return this.postService.deletePostById(id);
+    @PatchMapping("fundraiser/updateEmail")
+    public Fundraiser updateFundraiserEmail(Integer id,String newEmail) throws FundraiserExceptions {
+        return this.fundraiserService.updateFundraiserEmail(id,newEmail);
     }
 
-    @GetMapping("fundraiser/getPostByFundraiserId/{id}")
-    public List<Post> getPostsByFundraiserId(@PathVariable("id") Integer fundraiserId) throws PostExceptions {
-        return this.postService.getPostsByFundraiserId(fundraiserId);
+    @PatchMapping("fundraiser/updatePassword")
+    public Fundraiser updateFundraiserPassword(Integer id,@RequestBody FundraiserLoginDto FundraiserLoginDto) throws FundraiserExceptions {
+        return this.fundraiserService.updateFundraiserPasswordById(id,FundraiserLoginDto.getPassword());
     }
+
+    @DeleteMapping("fundraiser/delete")
+    public String deleteFundraiser(Integer id) throws FundraiserExceptions {
+        return this.fundraiserService.deleteFundraiserById(id);
+    }
+
+
+
+
+//    @PostMapping("fundraiser/addNewPost")
+//    public Post addNewPost(@RequestBody Post newPost) throws PostExceptions {
+//        return this.postService.addNewPost(newPost);
+//    }
+//
+//    @PutMapping("fundraiser/updatePost")
+//    public Post updatePost(@RequestBody Post updatePost) throws PostExceptions {
+//        return this.postService.updatePost(updatePost);
+//    }
+//
+//    @DeleteMapping("fundraiser/deletePost/{id}")
+//    public Post deletePostById(Integer id) throws PostExceptions {
+//        return this.postService.deletePostById(id);
+//    }
+//
+//    @GetMapping("fundraiser/getPostByFundraiserId/{id}")
+//    public List<Post> getPostsByFundraiserId(@PathVariable("id") Integer fundraiserId) throws PostExceptions {
+//        return this.postService.getPostsByFundraiserId(fundraiserId);
+//    }
 
 }
