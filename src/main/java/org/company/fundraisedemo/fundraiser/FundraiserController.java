@@ -59,24 +59,24 @@ public class FundraiserController {
 
 
 
-//    @PostMapping("fundraiser/addNewPost")
-//    public Post addNewPost(@RequestBody Post newPost) throws PostExceptions {
-//        return this.postService.addNewPost(newPost);
-//    }
-//
-//    @PutMapping("fundraiser/updatePost")
-//    public Post updatePost(@RequestBody Post updatePost) throws PostExceptions {
-//        return this.postService.updatePost(updatePost);
-//    }
-//
-//    @DeleteMapping("fundraiser/deletePost/{id}")
-//    public Post deletePostById(Integer id) throws PostExceptions {
-//        return this.postService.deletePostById(id);
-//    }
-//
-//    @GetMapping("fundraiser/getPostByFundraiserId/{id}")
-//    public List<Post> getPostsByFundraiserId(@PathVariable("id") Integer fundraiserId) throws PostExceptions {
-//        return this.postService.getPostsByFundraiserId(fundraiserId);
-//    }
+    @PostMapping("fundraiser/addNewPost")
+    public Post addNewPost(@RequestBody Post newPost) throws PostExceptions {
+        return this.postService.addNewPost(newPost);
+    }
+
+    @PutMapping("fundraiser/updatePost")
+    public Post updatePost(@RequestBody Post updatePost) throws PostExceptions {
+        return this.postService.updatePost(updatePost);
+    }
+
+    @DeleteMapping("fundraiser/deletePost/{id}")
+    public Post deletePostById(Integer id) throws PostExceptions {
+        return this.postService.deletePostById(id);
+    }
+
+    @GetMapping("fundraiser/getPostByFundraiserId/{id}")
+    public List<Post> getPostsByFundraiserId(@PathVariable("id") Integer fundraiserId) throws PostExceptions {
+        return this.postService.getPostsByFundraiserId(fundraiserId);
+    }
 
 }
