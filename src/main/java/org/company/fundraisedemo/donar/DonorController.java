@@ -83,17 +83,5 @@ public class DonorController {
     public List<Post> getPostsByCategory(@PathVariable String category) throws PostExceptions {
         return postService.getPostsByCategory(category);
     }
-//
-//    }
-//
-//    @PostMapping("donor/donate")
-//    public void donate()
-//{
-//
-//}
-//    @GetMapping("donor/donationHistory")
-//    public List<Double> viewDonationHistoryById(Integer id)
-//    {
-//        return this.donorService.viewDonationHistoryById(id);
-//    }
+
 }
