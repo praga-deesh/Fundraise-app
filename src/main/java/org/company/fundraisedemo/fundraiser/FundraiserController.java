@@ -31,7 +31,30 @@ public class FundraiserController {
         return this.fundraiserService.loginFundraiserProfile(fundraiserLoginDto.getEmail(),fundraiserLoginDto.getPassword());
     }
 
+    @GetMapping("fundraiser")
+    public Fundraiser viewFundraiser(Integer id) throws FundraiserExceptions {
+        return this.fundraiserService.viewFundraiserById(id);
+    }
 
+    @PatchMapping("fundraiser/updateName")
+    public Fundraiser updateFundraiserName(Integer id,String newName) throws FundraiserExceptions {
+        return this.fundraiserService.updateFundraiserNameById(id,newName);
+    }
+
+    @PatchMapping("fundraiser/updateEmail")
+    public Fundraiser updateFundraiserEmail(Integer id,String newEmail) throws FundraiserExceptions {
+        return this.fundraiserService.updateFundraiserEmail(id,newEmail);
+    }
+
+    @PatchMapping("fundraiser/updatePassword")
+    public Fundraiser updateFundraiserPassword(Integer id,@RequestBody FundraiserLoginDto FundraiserLoginDto) throws FundraiserExceptions {
+        return this.fundraiserService.updateFundraiserPasswordById(id,FundraiserLoginDto.getPassword());
+    }
+
+    @DeleteMapping("fundraiser/delete")
+    public String deleteFundraiser(Integer id) throws FundraiserExceptions {
+        return this.fundraiserService.deleteFundraiserById(id);
+    }
 
 
 

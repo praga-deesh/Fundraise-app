@@ -4,4 +4,6 @@ import java.util.Optional;
 
 public interface FundraiserRepositoryDao extends JpaRepository<Fundraiser,Integer> {
     Optional<Fundraiser> findByEmail(String email);
+    Optional<Fundraiser> findById(Integer id);
+
 }

@@ -1,7 +1,5 @@
 package org.company.fundraisedemo.fundraiser;
 
-import org.company.fundraisedemo.donar.Donor;
-import org.company.fundraisedemo.donar.DonorExceptions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,5 +28,55 @@ public class FundraiserServiceImpl implements FundraiserService {
         if(!foundFundraiser.getPassword().equals(userPassword))
             throw new FundraiserExceptions("Password doesn't match");
         return foundFundraiser;
+    }
+    @Override
+    public Fundraiser viewFundraiserById(Integer id) throws FundraiserExceptions {
+        Optional<Fundraiser> accountOpt=this.fundraiserRepositoryDao.findById(id);
+        if(accountOpt.isEmpty())
+            throw new FundraiserExceptions("Profile doesn't exists:"+id);
+        Fundraiser foundFundraiser=accountOpt.get();
+        return foundFundraiser;
+    }
+
+    @Override
+    public Fundraiser updateFundraiserNameById(Integer id,String newName) throws FundraiserExceptions {
+        Optional<Fundraiser> accountOpt=this.fundraiserRepositoryDao.findById(id);
+        if(accountOpt.isEmpty())
+            throw new FundraiserExceptions("Profile doesn't exists:"+id);
+        Fundraiser foundFundraiser=accountOpt.get();
+        foundFundraiser.setName(newName);
+        this.fundraiserRepositoryDao.save(foundFundraiser);
+        return foundFundraiser;
+    }
+
+    @Override
+    public Fundraiser updateFundraiserEmail(Integer id,String newEmail) throws FundraiserExceptions {
+        Optional<Fundraiser> accountOpt=this.fundraiserRepositoryDao.findById(id);
+        if(accountOpt.isEmpty())
+            throw new FundraiserExceptions("Profile doesn't exists:"+id);
+        Fundraiser foundFundraiser=accountOpt.get();
+        foundFundraiser.setEmail(newEmail);
+        this.fundraiserRepositoryDao.save(foundFundraiser);
+        return foundFundraiser;
+    }
+
+    @Override
+    public Fundraiser updateFundraiserPasswordById(Integer id,String newPassword) throws FundraiserExceptions {
+        Optional<Fundraiser> accountOpt=this.fundraiserRepositoryDao.findById(id);
+        if(accountOpt.isEmpty())
+            throw new FundraiserExceptions("Profile doesn't exists:"+id);
+        Fundraiser foundFundraiser=accountOpt.get();
+        foundFundraiser.setPassword(newPassword);
+        this.fundraiserRepositoryDao.save(foundFundraiser);
+        return foundFundraiser;
+    }
+
+    @Override
+    public String deleteFundraiserById(Integer id) throws FundraiserExceptions {
+        Optional<Fundraiser> accountOpt=this.fundraiserRepositoryDao.findById(id);
+        if(accountOpt.isEmpty())
+            throw new FundraiserExceptions("Profile doesn't exists:"+id);
+        this.fundraiserRepositoryDao.deleteById(id);
+        return "Profile deleted successfully!!";
     }
 }

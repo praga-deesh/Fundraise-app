@@ -12,6 +12,7 @@ public class FundraiserLoginDto {
         this.password = password;
     }
 
+
     public String getEmail() {
         return email;
     }
