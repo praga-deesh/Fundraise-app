@@ -6,7 +6,7 @@ import org.company.fundraisedemo.payment.Payment;
 import java.util.List;
 
 @Entity
-public class Donor {
+public class  Donor {
     @Id
     @GeneratedValue
     private Integer id;
