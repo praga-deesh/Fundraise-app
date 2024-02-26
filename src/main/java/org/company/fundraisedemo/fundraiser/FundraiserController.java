@@ -56,9 +56,6 @@ public class FundraiserController {
         return this.fundraiserService.deleteFundraiserById(id);
     }
 
-
-
-
     @PostMapping("fundraiser/addNewPost")
     public Post addNewPost(@RequestBody Post newPost) throws PostExceptions {
         return this.postService.addNewPost(newPost);

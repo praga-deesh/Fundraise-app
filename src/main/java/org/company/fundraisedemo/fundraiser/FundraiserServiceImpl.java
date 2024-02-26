@@ -13,6 +13,8 @@ public class FundraiserServiceImpl implements FundraiserService {
 
     @Override
     public Fundraiser createFundraiserProfile(Fundraiser newFundraiser) throws FundraiserExceptions {
+        if(newFundraiser == null)
+            throw new FundraiserExceptions("Data should be present.");
         Optional<Fundraiser> accountOpt=this.fundraiserRepositoryDao.findByEmail(newFundraiser.getEmail());
         if(accountOpt.isPresent())
             throw new FundraiserExceptions("Account already exits..so try logging in");
@@ -21,6 +23,8 @@ public class FundraiserServiceImpl implements FundraiserService {
 
     @Override
     public Fundraiser loginFundraiserProfile(String userEmail, String userPassword) throws FundraiserExceptions {
+        if(userEmail == null || userPassword == null)
+            throw new FundraiserExceptions("Email or password field can't be null");
         Optional<Fundraiser> accountOpt=this.fundraiserRepositoryDao.findByEmail(userEmail);
         if(accountOpt.isEmpty())
             throw new FundraiserExceptions("Account doesn't exits:"+userEmail);
@@ -31,6 +35,8 @@ public class FundraiserServiceImpl implements FundraiserService {
     }
     @Override
     public Fundraiser viewFundraiserById(Integer id) throws FundraiserExceptions {
+        if(id == null)
+            throw new FundraiserExceptions("id can't be null");
         Optional<Fundraiser> accountOpt=this.fundraiserRepositoryDao.findById(id);
         if(accountOpt.isEmpty())
             throw new FundraiserExceptions("Profile doesn't exists:"+id);
@@ -40,6 +46,8 @@ public class FundraiserServiceImpl implements FundraiserService {
 
     @Override
     public Fundraiser updateFundraiserNameById(Integer id,String newName) throws FundraiserExceptions {
+        if(id == null || newName==null)
+            throw new FundraiserExceptions("id or newName can't be null");
         Optional<Fundraiser> accountOpt=this.fundraiserRepositoryDao.findById(id);
         if(accountOpt.isEmpty())
             throw new FundraiserExceptions("Profile doesn't exists:"+id);
@@ -51,6 +59,8 @@ public class FundraiserServiceImpl implements FundraiserService {
 
     @Override
     public Fundraiser updateFundraiserEmail(Integer id,String newEmail) throws FundraiserExceptions {
+        if(id == null || newEmail==null)
+            throw new FundraiserExceptions("id or newEmail can't be null");
         Optional<Fundraiser> accountOpt=this.fundraiserRepositoryDao.findById(id);
         if(accountOpt.isEmpty())
             throw new FundraiserExceptions("Profile doesn't exists:"+id);
@@ -62,6 +72,8 @@ public class FundraiserServiceImpl implements FundraiserService {
 
     @Override
     public Fundraiser updateFundraiserPasswordById(Integer id,String newPassword) throws FundraiserExceptions {
+        if(id == null || newPassword==null)
+            throw new FundraiserExceptions("id or newPassword can't be null");
         Optional<Fundraiser> accountOpt=this.fundraiserRepositoryDao.findById(id);
         if(accountOpt.isEmpty())
             throw new FundraiserExceptions("Profile doesn't exists:"+id);
@@ -73,6 +85,8 @@ public class FundraiserServiceImpl implements FundraiserService {
 
     @Override
     public String deleteFundraiserById(Integer id) throws FundraiserExceptions {
+        if(id == null)
+            throw new FundraiserExceptions("id can't be null");
         Optional<Fundraiser> accountOpt=this.fundraiserRepositoryDao.findById(id);
         if(accountOpt.isEmpty())
             throw new FundraiserExceptions("Profile doesn't exists:"+id);
