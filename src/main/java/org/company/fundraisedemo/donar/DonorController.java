@@ -80,22 +80,8 @@ public class DonorController {
         return postService.getPostsSortedByDate();
     }
 
-}
 
-
-
-
-//
-//    }
-//
-//    @PostMapping("donor/donate")
-//    public void donate()
-//{
-//
-//}
-
-
-/*@GetMapping("donar/completedPosts")
+@GetMapping("donar/completedPosts")
 public List<Post> getCompletedPosts() throws PostExceptions {
     return postService.getCompletedPosts();
 }
@@ -109,5 +95,5 @@ public List<Post> getPostsByCategory(@PathVariable String category) throws PostE
     return postService.getPostsByCategory(category);
 }
 
-}*/
+}
 
