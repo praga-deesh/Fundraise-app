@@ -2,6 +2,7 @@ package org.company.fundraisedemo.post;
 
 import org.company.fundraisedemo.fundraiser.FundraiserRepositoryDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -105,6 +106,7 @@ public class PostServiceImpl implements PostService{
          }
         return result;
     }
+
 
 
 

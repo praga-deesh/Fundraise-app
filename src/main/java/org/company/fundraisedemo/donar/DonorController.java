@@ -55,7 +55,11 @@ public class DonorController {
     public List<Post> getPostsByTitle(@PathVariable String title) throws PostExceptions{
         return postService.getPostsByTitle(title);
     }
-//
+
+
+
+
+    //
 //    }
 //
 //    @PostMapping("donor/donate")

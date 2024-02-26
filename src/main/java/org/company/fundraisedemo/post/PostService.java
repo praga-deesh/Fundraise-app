@@ -21,4 +21,8 @@ public interface PostService {
     List<Post> getPostById(Integer postId) throws PostExceptions;
 
 
+
+
+
+
 }
