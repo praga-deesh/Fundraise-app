@@ -1,6 +1,5 @@
 package org.company.fundraisedemo.donar;
 
-import java.util.List;
 
 public interface DonorService {
 
@@ -9,7 +8,6 @@ public interface DonorService {
     Donor loginDonorProfile(String email, String password) throws DonorExceptions;
 
     Donor viewDonorById(Integer id) throws DonorExceptions;
-
 
     Donor updateDonorNameById(Integer id,String newName) throws DonorExceptions;
 
