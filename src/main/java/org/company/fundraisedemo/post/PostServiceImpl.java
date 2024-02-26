@@ -107,7 +107,14 @@ public class PostServiceImpl implements PostService{
         return result;
     }
 
-
+    @Override
+    public List<Post> getPostsSortedByDate() throws PostExceptions {
+        List<Post> sortedPosts=postRepositoryDao.findAll(Sort.by(Sort.Direction.DESC,"startDate"));
+        if(sortedPosts.isEmpty()){
+            throw new PostExceptions("No post found");
+        }
+        return sortedPosts;
+    }
 
 
 }
