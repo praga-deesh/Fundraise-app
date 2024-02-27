@@ -51,4 +51,6 @@ class DonorServiceImplTest {
         Assertions.assertEquals(expectedDonor.getPassword(),actualDonar.getPassword());
         donorRepositoryDao.delete(actualDonar);
     }
+//    @Test
+//    void
 }
