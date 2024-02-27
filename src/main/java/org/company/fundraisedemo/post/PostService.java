@@ -20,5 +20,10 @@ public interface PostService {
 
     List<Post> getPostById(Integer postId) throws PostExceptions;
 
+    List<Post> getPostsSortedByDate() throws PostExceptions;
+
+
+
+
 
 }

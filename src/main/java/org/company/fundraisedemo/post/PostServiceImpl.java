@@ -2,6 +2,7 @@ package org.company.fundraisedemo.post;
 
 import org.company.fundraisedemo.fundraiser.FundraiserRepositoryDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -102,6 +103,14 @@ public class PostServiceImpl implements PostService{
         return result;
     }
 
+    @Override
+    public List<Post> getPostsSortedByDate() throws PostExceptions {
+        List<Post> sortedPosts=postRepositoryDao.findAll(Sort.by(Sort.Direction.DESC,"startDate"));
+        if(sortedPosts.isEmpty()){
+            throw new PostExceptions("No post found");
+        }
+        return sortedPosts;
+    }
 
 
 }
