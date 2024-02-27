@@ -18,7 +18,6 @@ public class Comment {
     private Integer postId;
     private String commentDescription;
 
-
     public Comment() {
     }
 
