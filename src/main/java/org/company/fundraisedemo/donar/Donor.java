@@ -5,6 +5,7 @@ import org.company.fundraisedemo.payment.Payment;
 
 import java.util.List;
 
+
 @Entity
 public class  Donor {
     @Id
@@ -27,14 +28,20 @@ public class  Donor {
         this.donationHistory = donationHistory;
     }
 
-    public Donor() {
-    }
-
     public Donor(String name, String email, String password) {
         this.name = name;
         this.email = email;
         this.password = password;
     }
+
+    public Donor(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
+
+    public Donor() {
+    }
+
 
 
     public Integer getId() {
@@ -76,5 +83,7 @@ public class  Donor {
     public void setDonationHistory(List<Payment> donationHistory) {
         this.donationHistory = donationHistory;
     }
+
+
 }
 
