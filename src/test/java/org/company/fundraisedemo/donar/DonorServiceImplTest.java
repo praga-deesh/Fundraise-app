@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import javax.print.attribute.standard.DocumentName;
 
 import java.sql.SQLOutput;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,26 +19,38 @@ class DonorServiceImplTest {
     DonorRepositoryDao donorRepositoryDao;
     @Autowired
     DonorService donorService;
-
-
-
     @Test
-    void createDonarProfileTest() {
+    void createDonorProfileTest() {
 
-
-        Donor actaulDonarVal = new Donor("kl","kl@gmail.com","kl");
+        Donor actualDonarVal = new Donor("Asmithaa","asmithaa@gmail.com","string@123");
         Donor expectedDonar;
-        Donor actaulDonar = null;
+        Donor actualDonar = null;
         try {
-            actaulDonar = donorService.createDonorProfile(actaulDonarVal);
+            actualDonar = donorService.createDonorProfile(actualDonarVal);
         } catch (DonorExceptions e) {
             throw new RuntimeException(e);
         }
-        expectedDonar = donorRepositoryDao.findById(actaulDonar.getId()).get();
+        expectedDonar = donorRepositoryDao.findById(actualDonar.getId()).get();
     //Assertions.assertNotNull(donorRepositoryDao.findById(expectedDonar.getId()));)
-        Assertions.assertEquals(expectedDonar.getId(), actaulDonar.getId());
-
-        donorRepositoryDao.delete(actaulDonar);
+        Assertions.assertEquals(expectedDonar.getId(), actualDonar.getId());
+        donorRepositoryDao.delete(actualDonar);
     }
-
+    @Test
+    void loginDonorTest()
+    {
+        Donor actualDonarVal = new Donor("shree","shree@gmail.com","string@800");
+        Donor expectedDonor;
+        Donor actualDonar = null;
+        try {
+            actualDonar = donorService.createDonorProfile(actualDonarVal);
+        } catch (DonorExceptions e) {
+            throw new RuntimeException(e);
+        }
+        expectedDonor=donorRepositoryDao.findByEmail(actualDonar.getEmail()).get();
+        Assertions.assertEquals(expectedDonor.getEmail(),actualDonar.getEmail());
+        Assertions.assertEquals(expectedDonor.getPassword(),actualDonar.getPassword());
+        donorRepositoryDao.delete(actualDonar);
+    }
+//    @Test
+//    void
 }
