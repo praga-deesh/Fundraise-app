@@ -36,6 +36,7 @@ public class FundraiserController {
         return this.fundraiserService.viewFundraiserById(id);
     }
 
+
     @PatchMapping("fundraiser/updateName")
     public Fundraiser updateFundraiserName(Integer id,String newName) throws FundraiserExceptions {
         return this.fundraiserService.updateFundraiserNameById(id,newName);

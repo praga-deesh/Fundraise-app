@@ -43,7 +43,19 @@ public class FundraiserServiceImplTest {
         expectedFundraiser = fundraiserRepositoryDao.findById(actualFundraiser.getId()).get();
         Assertions.assertEquals(expectedFundraiser.getId(),actualFundraiser.getId());
         fundraiserRepositoryDao.delete(actualFundraiserValue);
-
     }
+
+//    void updateFundraiserNameByIdTest(){
+//        Fundraiser actualFundraiserValue = new Fundraiser("test", "test@gmail.com","test");
+//        Fundraiser expectedFundraiser;
+//        Fundraiser actualFundraiser = null;
+//
+//        try{
+//            actualFundraiser = fundraiserService.createFundraiserProfile(actualFundraiserValue);
+//
+//        } catch(FundraiserExceptions e){
+//            e.printStackTrace();
+//        }
+//    }
 
 }

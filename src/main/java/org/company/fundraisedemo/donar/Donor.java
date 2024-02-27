@@ -7,7 +7,7 @@ import java.util.List;
 
 
 @Entity
-public class Donor {
+public class  Donor {
     @Id
     @GeneratedValue
     private Integer id;
@@ -34,8 +34,15 @@ public class Donor {
         this.password = password;
     }
 
+    public Donor(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
+
     public Donor() {
     }
+
+
 
     public Integer getId() {
         return id;
