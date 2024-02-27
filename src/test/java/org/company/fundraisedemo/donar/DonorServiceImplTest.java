@@ -35,4 +35,20 @@ class DonorServiceImplTest {
         Assertions.assertEquals(expectedDonar.getId(), actualDonar.getId());
         donorRepositoryDao.delete(actualDonar);
     }
+    @Test
+    void loginDonorTest()
+    {
+        Donor actualDonarVal = new Donor("shree","shree@gmail.com","string@800");
+        Donor expectedDonor;
+        Donor actualDonar = null;
+        try {
+            actualDonar = donorService.createDonorProfile(actualDonarVal);
+        } catch (DonorExceptions e) {
+            throw new RuntimeException(e);
+        }
+        expectedDonor=donorRepositoryDao.findByEmail(actualDonar.getEmail()).get();
+        Assertions.assertEquals(expectedDonor.getEmail(),actualDonar.getEmail());
+        Assertions.assertEquals(expectedDonor.getPassword(),actualDonar.getPassword());
+        donorRepositoryDao.delete(actualDonar);
+    }
 }
