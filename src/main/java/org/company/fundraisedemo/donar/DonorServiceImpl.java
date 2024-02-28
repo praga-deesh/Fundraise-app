@@ -15,6 +15,7 @@ public class DonorServiceImpl implements DonorService
 
     @Override
     public Donor createDonorProfile(Donor newDonor) throws DonorExceptions {
+
         Optional<Donor> accountOpt=this.donorRepositoryDao.findByEmail(newDonor.getEmail());
         if(accountOpt.isPresent())
             throw new DonorExceptions("Account already exits..so try logging in");
@@ -34,6 +35,8 @@ public class DonorServiceImpl implements DonorService
 
     @Override
     public Donor viewDonorById(Integer id) throws DonorExceptions {
+        if(id==null)
+            throw new DonorExceptions("Id should not be null");
         Optional<Donor> accountOpt=this.donorRepositoryDao.findById(id);
         if(accountOpt.isEmpty())
             throw new DonorExceptions("Profile doesn't exists:"+id);
@@ -53,7 +56,7 @@ public class DonorServiceImpl implements DonorService
     }
 
     @Override
-    public Donor updateDonorEmail(Integer id,String newEmail) throws DonorExceptions {
+    public Donor updateDonorEmailById(Integer id,String newEmail) throws DonorExceptions {
         Optional<Donor> accountOpt=this.donorRepositoryDao.findById(id);
         if(accountOpt.isEmpty())
             throw new DonorExceptions("Profile doesn't exists:"+id);
