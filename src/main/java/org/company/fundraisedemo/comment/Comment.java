@@ -28,6 +28,9 @@ public class Comment {
         this.commentDescription = commentDescription;
     }
 
+
+
+
     public Integer getId() {
         return id;
     }

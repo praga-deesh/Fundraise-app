@@ -3,7 +3,7 @@ package org.company.fundraisedemo.post;
 import jakarta.persistence.*;
 import org.company.fundraisedemo.comment.Comment;
 import org.company.fundraisedemo.fundraiser.Fundraiser;
-import org.company.fundraisedemo.payment.Payment;
+
 
 import java.time.LocalDate;
 import java.util.List;
@@ -30,9 +30,9 @@ public class Post {
     @JoinColumn(name = "fundraiser_id", nullable = false)
     private Fundraiser fundraiser;
 
-    @OneToMany
-    @Column(nullable = true)
-    private List<Payment> donations;
+//    @OneToMany
+//    @Column(nullable = true)
+//    private List<Payment> donations;
 
     @OneToMany
     @Column(nullable = true)
