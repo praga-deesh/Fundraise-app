@@ -5,6 +5,8 @@ public interface DonorService {
 
     Donor createDonorProfile(Donor newDonor) throws DonorExceptions;
 
+    Donor getDonorByBankAccountId(String accountId) throws DonorExceptions;
+
     Donor loginDonorProfile(String email, String password) throws DonorExceptions;
 
     Donor viewDonorById(Integer id) throws DonorExceptions;
@@ -16,4 +18,6 @@ public interface DonorService {
     Donor updateDonorPasswordById(Integer id,String newPassword) throws DonorExceptions;
 
     String deleteDonorById(Integer id) throws DonorExceptions;
+
+    Donor updateDonorBankDets(Integer id, String accountId, Double balance) throws DonorExceptions;
 }

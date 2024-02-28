@@ -18,7 +18,7 @@ public class PostServiceImpl implements PostService{
     private FundraiserRepositoryDao fundraiserRepositoryDao;
 
     @Override
-    public Post addNewPost(Post post) {
+    public Post addNewPost(Post post)throws PostExceptions {
         return this.postRepositoryDao.save(post);
     }
 
@@ -101,6 +101,11 @@ public class PostServiceImpl implements PostService{
              throw new PostExceptions("Post Not Found:"+postId);
          }
         return result;
+    }
+
+    @Override
+    public Post getPostByAccountId(String accountId) throws PostExceptions {
+        return this.postRepositoryDao.findPostByDonationAccountId(accountId);
     }
 
     @Override
