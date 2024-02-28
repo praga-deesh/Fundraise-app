@@ -7,5 +7,4 @@ import java.util.Optional;
 public interface DonorRepositoryDao extends JpaRepository<Donor,Integer>
 {
     Optional<Donor> findByEmail(String email);
-
 }
