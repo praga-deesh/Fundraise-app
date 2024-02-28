@@ -45,7 +45,7 @@ public class DonorController {
 
     @PatchMapping("donor/updateEmail")
     public Donor updateDonorEmail(Integer id, String newEmail) throws DonorExceptions {
-        return this.donorService.updateDonorEmail(id, newEmail);
+        return this.donorService.updateDonorEmailById(id, newEmail);
     }
 
     @PatchMapping("donor/updatePassword")
