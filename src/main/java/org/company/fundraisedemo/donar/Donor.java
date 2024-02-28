@@ -16,15 +16,36 @@ public class  Donor {
     private String email;
     private String password;
 
+    private String accountId;
+    private Double accountBalance;
+
     @OneToMany
     @Column(nullable = true)
     private List<Payment> donationHistory;
 
-    public Donor(Integer id, String name, String email, String password, List<Payment> donationHistory) {
+    public String getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
+    }
+
+    public Double getAccountBalance() {
+        return accountBalance;
+    }
+
+    public void setAccountBalance(Double accountBalance) {
+        this.accountBalance = accountBalance;
+    }
+
+    public Donor(Integer id, String name, String email, String password, String accountId, Double accountBalance, List<Payment> donationHistory) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
+        this.accountId = accountId;
+        this.accountBalance = accountBalance;
         this.donationHistory = donationHistory;
     }
 

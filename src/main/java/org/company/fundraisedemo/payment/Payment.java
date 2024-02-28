@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import org.company.fundraisedemo.donar.Donor;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 public class Payment {
@@ -12,15 +11,12 @@ public class Payment {
     @GeneratedValue
     private Integer id;
 
+    private String fromAccountid;
+    private String donatedAccountId;
+    private Integer donatedPostId;
     private Double amount;
-    private String paymentMethod;
-    private LocalDateTime paymentDate;
+    private LocalDateTime paymentDateTime;
     private String status;
-
-    private String comment;
-
-
-    //hello hiiiii
 
     @ManyToOne
     private Donor donors;
@@ -29,11 +25,23 @@ public class Payment {
     public Payment() {
     }
 
-    public Payment(Integer id, Double amount, String paymentMethod, LocalDateTime paymentDate, String status, Donor donor, org.company.fundraisedemo.post.Post post) {
+    public Payment(Integer id, String fromAccountid, String donatedAccountId, Integer donatedPostId, Double amount, LocalDateTime paymentDateTime, String status, Donor donors) {
         this.id = id;
+        this.fromAccountid = fromAccountid;
+        this.donatedAccountId = donatedAccountId;
+        this.donatedPostId = donatedPostId;
         this.amount = amount;
-        this.paymentMethod = paymentMethod;
-        this.paymentDate = paymentDate;
+        this.paymentDateTime = paymentDateTime;
+        this.status = status;
+        this.donors = donors;
+    }
+
+    public Payment(String fromAccountid, String donatedAccountId, Integer donatedPostId, Double amount, LocalDateTime paymentDateTime, String status, Donor donors) {
+        this.fromAccountid = fromAccountid;
+        this.donatedAccountId = donatedAccountId;
+        this.donatedPostId = donatedPostId;
+        this.amount = amount;
+        this.paymentDateTime = paymentDateTime;
         this.status = status;
         this.donors = donors;
     }
@@ -54,20 +62,13 @@ public class Payment {
         this.amount = amount;
     }
 
-    public String getPaymentMethod() {
-        return paymentMethod;
+
+    public LocalDateTime getPaymentDateTime() {
+        return paymentDateTime;
     }
 
-    public void setPaymentMethod(String paymentMethod) {
-        this.paymentMethod = paymentMethod;
-    }
-
-    public LocalDateTime getPaymentDate() {
-        return paymentDate;
-    }
-
-    public void setPaymentDate(LocalDateTime paymentDate) {
-        this.paymentDate = paymentDate;
+    public void setPaymentDateTime(LocalDateTime paymentDate) {
+        this.paymentDateTime = paymentDate;
     }
 
     public String getStatus() {
