@@ -102,7 +102,6 @@ class PostServiceImplTest {
             throw new RuntimeException(e);
         }
         Assertions.assertEquals(newPost.getId(), deletedPost.getId());
-
         fundraiserRepositoryDao.delete(fundraiser);
 
     }
@@ -146,7 +145,7 @@ class PostServiceImplTest {
         postRepositoryDao.delete(newPost3);
         fundraiserRepositoryDao.delete(fundraiser1);
         fundraiserRepositoryDao.delete(fundraiser2);
-
+//checking
 
     }
 
