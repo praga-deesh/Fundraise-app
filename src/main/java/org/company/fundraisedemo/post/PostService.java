@@ -20,6 +20,9 @@ public interface PostService {
 
     List<Post> getPostById(Integer postId) throws PostExceptions;
 
+    Post getPostByAccountId(String accountId) throws PostExceptions;
+
+
     List<Post> getPostsSortedByDate() throws PostExceptions;
 
 

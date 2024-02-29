@@ -3,6 +3,9 @@ package org.company.fundraisedemo.donar;
 import org.company.fundraisedemo.comment.CommentService;
 
 
+import org.company.fundraisedemo.payment.PaymentExceptions;
+import org.company.fundraisedemo.payment.PaymentService;
+import org.company.fundraisedemo.payment.TransactionDto;
 import org.company.fundraisedemo.post.Post;
 import org.company.fundraisedemo.post.PostExceptions;
 import org.company.fundraisedemo.post.PostService;
@@ -14,6 +17,7 @@ import java.util.List;
 
 @RestController
 public class DonorController {
+
     @Autowired
     private CommentService commentService;
     @Autowired
@@ -22,15 +26,24 @@ public class DonorController {
     @Autowired
     private PostService postService;
 
+    @Autowired
+    private PaymentService paymentService;
+
 
     @PostMapping("donor/createNewProfile")
     public Donor createDonor(@RequestBody Donor newDonor) throws DonorExceptions {
         return this.donorService.createDonorProfile(newDonor);
     }
 
+
     @PostMapping("donor/login")
     public Donor loginDonor(@RequestBody DonorLoginDto donorLoginDto) throws DonorExceptions {
         return this.donorService.loginDonorProfile(donorLoginDto.getEmail(), donorLoginDto.getPassword());
+    }
+
+    @PostMapping("donor/bankdets/{id}")
+    public Donor updateDonorBankDets(@PathVariable Integer id, String accountId , Double balance) throws DonorExceptions{
+        return this.donorService.updateDonorBankDets(id,accountId,balance);
     }
 
     @GetMapping("donor")
@@ -45,7 +58,7 @@ public class DonorController {
 
     @PatchMapping("donor/updateEmail")
     public Donor updateDonorEmail(Integer id, String newEmail) throws DonorExceptions {
-        return this.donorService.updateDonorEmail(id, newEmail);
+        return this.donorService.updateDonorEmailById(id, newEmail);
     }
 
     @PatchMapping("donor/updatePassword")
@@ -94,6 +107,11 @@ public List<Post> getIncompletedPosts() throws PostExceptions {
 public List<Post> getPostsByCategory(@PathVariable String category) throws PostExceptions {
     return postService.getPostsByCategory(category);
 }
+
+    @PatchMapping("payment")
+    public String makePayment(@RequestBody TransactionDto transaction) throws PostExceptions, DonorExceptions, PaymentExceptions {
+        return paymentService.transaction(transaction);
+    }
 
 }
 

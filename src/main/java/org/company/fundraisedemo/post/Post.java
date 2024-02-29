@@ -26,6 +26,9 @@ public class Post {
     private Double amountCollected;
     private String status;
 
+    private String donationAccountId;
+//    private Double donationAccountBalance;
+
     @ManyToOne
     @JoinColumn(name = "fundraiser_id", nullable = false)
     private Fundraiser fundraiser;
@@ -52,8 +55,7 @@ public class Post {
         this.status = status;
         this.fundraiser = fundraiser;
     }
-
-    public Post(Integer id, String title, String description, String category, LocalDate startDate, LocalDate endDate, Double amountRequested, Double amountCollected, String status, Fundraiser fundraiser, List<Payment> donations, List<Comment> comments) {
+    public Post(Integer id,String title, String description, String category, LocalDate startDate, LocalDate endDate, Double amountRequested, Double amountCollected, String status, Fundraiser fundraiser) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -63,6 +65,21 @@ public class Post {
         this.amountRequested = amountRequested;
         this.amountCollected = amountCollected;
         this.status = status;
+        this.fundraiser = fundraiser;
+    }
+
+    public Post(Integer id, String title, String description, String category, LocalDate startDate, LocalDate endDate, Double amountRequested, Double amountCollected, String status, String donationAccountId, Double donationAccountBalance, Fundraiser fundraiser, List<Payment> donations, List<Comment> comments) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.category = category;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.amountRequested = amountRequested;
+        this.amountCollected = amountCollected;
+        this.status = status;
+        this.donationAccountId = donationAccountId;
+//        this.donationAccountBalance = donationAccountBalance;
         this.fundraiser = fundraiser;
         this.donations = donations;
         this.comments = comments;
@@ -163,4 +180,20 @@ public class Post {
     public void setTitle(String title) {
         this.title = title;
     }
+
+    public String getDonationAccountId() {
+        return donationAccountId;
+    }
+
+    public void setDonationAccountId(String donationAccountId) {
+        this.donationAccountId = donationAccountId;
+    }
+
+//    public Double getDonationAccountBalance() {
+//        return donationAccountBalance;
+//    }
+//
+//    public void setDonationAccountBalance(Double donationAccountBalance) {
+//        this.donationAccountBalance = donationAccountBalance;
+//    }
 }

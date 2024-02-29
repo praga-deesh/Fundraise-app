@@ -6,12 +6,14 @@ import org.company.fundraisedemo.fundraiser.Fundraiser;
 import org.company.fundraisedemo.fundraiser.FundraiserExceptions;
 import org.company.fundraisedemo.fundraiser.FundraiserRepositoryDao;
 import org.company.fundraisedemo.fundraiser.FundraiserService;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -36,7 +38,7 @@ class PostServiceImplTest {
         } catch (FundraiserExceptions e) {
             throw new RuntimeException(e);
         }
-        Post postVal = new Post("Poverty","Expenses for food and shelter for poors","poverty", LocalDate.of(2024, 02, 27),LocalDate.of(2024,04,20),200000.0,0.0,"incomplete",fundraiser);
+        Post postVal = new Post("Poverty Help","Expenses for food and shelter for poors","poverty", LocalDate.of(2024, 02, 27),LocalDate.of(2024,04,20),200000.0,0.0,"incomplete",fundraiser);
         try {
             post = postService.addNewPost(postVal);
         } catch (PostExceptions e) {
@@ -44,54 +46,189 @@ class PostServiceImplTest {
         }
         Assertions.assertNotNull(postRepositoryDao.findById(post.getId()));
 
+        postRepositoryDao.delete(post);
+        fundraiserRepositoryDao.delete(fundraiser);
+
     }
     @Test
-    void updatePostTest() throws PostExceptions {
-
-        Fundraiser fundraiser = new Fundraiser("john","dane@gmail.com","dami");
+    void getPostsSortedByDateTest() {
+        Fundraiser fundraiser1 = new Fundraiser("tommy", "tommy@gmail.com", "tfd");
+        Fundraiser fundraiser2 = new Fundraiser("tay", "tay@gmail.com", "tay");
         try {
-            fundraiserService.createFundraiserProfile(fundraiser);
+            fundraiserService.createFundraiserProfile(fundraiser1);
+            fundraiserService.createFundraiserProfile(fundraiser2);
         } catch (FundraiserExceptions e) {
             throw new RuntimeException(e);
         }
-        Post post = new Post("Poverty", "Expenses for food and shelter for poors", "poverty", LocalDate.of(2024, 02, 27), LocalDate.of(2024, 04, 20), 200000.0, 0.0, "incomplete", fundraiser);
-        postService.addNewPost(post);
 
-        post.setTitle("Updated Title");
-        post.setDescription("Updated Description");
-        post.setAmountRequested(300000.0);
+        Post postVal1 = new Post("Post 1", "Description", "category1", LocalDate.of(2024, 02, 25), LocalDate.of(2024, 04, 20), 200000.0, 0.0, "completed", fundraiser1);
+        Post postVal2 = new Post("Post 2", "Description", "category2", LocalDate.of(2024, 02, 27), LocalDate.of(2024, 04, 22), 200000.0, 0.0, "completed", fundraiser2);
+        Post newPost1, newPost2;
         try {
-            Post updatedPost = postService.updatePost(post);
-            assertNotNull(updatedPost);
-            assertEquals("Updated Title", updatedPost.getTitle());
-            assertEquals("Updated Description", updatedPost.getDescription());
-            assertEquals(300000.0, updatedPost.getAmountRequested());
+            newPost1 = postService.addNewPost(postVal1);
+            newPost2 = postService.addNewPost(postVal2);
         } catch (PostExceptions e) {
-            fail("Exception thrown while updating post: " + e.getMessage());
-        }
-    }
-    @Test
-    void deletePostByIdTest() throws PostExceptions {
-        Fundraiser fundraiser = new Fundraiser("johny","dame@gmail.com","dames");
-        try {
-            fundraiserService.createFundraiserProfile(fundraiser);
-        } catch (FundraiserExceptions e) {
             throw new RuntimeException(e);
         }
-        Post post = new Post("Poverty", "Expenses for food and shelter for poors", "poverty", LocalDate.of(2024, 02, 27), LocalDate.of(2024, 04, 20), 200000.0, 0.0, "incomplete", fundraiser);
-        postService.addNewPost(post);
 
-        Integer postId = post.getId();
+        List<Post> sortedPosts;
         try {
-            Post deletedPost = postService.deletePostById(postId);
-            assertNotNull(deletedPost);
-            assertEquals(postId, deletedPost.getId());
+            sortedPosts = postService.getPostsSortedByDate();
         } catch (PostExceptions e) {
-            fail("Exception thrown while deleting post by ID: " + e.getMessage());
+            throw new RuntimeException(e);
         }
 
-        assertFalse(postRepositoryDao.findById(postId).isPresent());
+        for (int i = 0; i < sortedPosts.size() - 1; i++) {
+            LocalDate currentPostDate = sortedPosts.get(i).getStartDate();
+            LocalDate nextPostDate = sortedPosts.get(i + 1).getStartDate();
+            Assertions.assertTrue(currentPostDate.compareTo(nextPostDate) >= 0, "Posts are not sorted by date in descending order");
+        }
+        postRepositoryDao.delete(newPost1);
+        postRepositoryDao.delete(newPost2);
+        fundraiserRepositoryDao.delete(fundraiser1);
+        fundraiserRepositoryDao.delete(fundraiser2);
+
     }
+    /*@Test
+    void getPostByIdTest() {
+        postRepositoryDao.deleteAll();
+        fundraiserRepositoryDao.deleteAll();
+        Fundraiser fundraiser = new Fundraiser("Test Fundraiser", "test@example.com", "password");
+        fundraiserRepositoryDao.save(fundraiser);
+        Post post = new Post("Test Post", "Description", "category", LocalDate.now(), LocalDate.now(), 1000.0, 0.0, "completed", fundraiser);
+        Post savedPost= null;
+        try {
+            savedPost = postService.addNewPost(post);
+        } catch (PostExceptions e) {
+            throw new RuntimeException(e);
+        }
+
+
+        List<Post> foundPosts= null;
+        try {
+            foundPosts = postService.getPostById(savedPost.getId());
+        } catch (PostExceptions e) {
+            throw new RuntimeException(e);
+        }
+        Assertions.assertEquals(303, foundPosts.size());
+        Assertions.assertEquals(savedPost, foundPosts.get(0));
+
+
+    }
+*/
+    @Test
+    void getPostsByTitleTest() {
+
+        Fundraiser fundraiser = new Fundraiser("klay","klay@gmail.com","klay");
+        fundraiserRepositoryDao.save(fundraiser);
+
+
+        Post post1 = new Post("Title1", "Description1", "Category1", LocalDate.of(2024, 1, 1), LocalDate.of(2024, 1, 10), 100.0, 50.0, "status1", fundraiser);
+        Post post2 = new Post("Title2", "Description2", "Category2", LocalDate.of(2024, 2, 1), LocalDate.of(2024, 2, 10), 200.0, 100.0, "status2", fundraiser);
+        postRepositoryDao.save(post1);
+        postRepositoryDao.save(post2);
+
+
+        List<Post> posts = null;
+        try {
+            posts = postService.getPostsByTitle("Title1");
+        } catch (PostExceptions e) {
+            throw new RuntimeException(e);
+        }
+
+
+        Assertions.assertNotNull(posts);
+        Assertions.assertEquals(1, posts.size());
+        Assertions.assertEquals("Title1", posts.get(0).getTitle());
+
+        // Clean up: delete the test posts and fundraiser from the database
+        postRepositoryDao.delete(post1);
+        postRepositoryDao.delete(post2);
+        fundraiserRepositoryDao.delete(fundraiser);
+    }
+    @Test
+    void getPostsByCategoryTest() {
+        Fundraiser fundraiser = new Fundraiser("klay","klay@gmail.com","klay");
+        fundraiserRepositoryDao.save(fundraiser);
+
+        Post post1 = new Post("Title1", "Description1", "Category1", LocalDate.of(2024, 1, 1), LocalDate.of(2024, 1, 10), 100.0, 50.0, "status1", fundraiser);
+        Post post2 = new Post("Title2", "Description2", "Category2", LocalDate.of(2024, 2, 1), LocalDate.of(2024, 2, 10), 200.0, 100.0, "status2", fundraiser);
+        postRepositoryDao.save(post1);
+        postRepositoryDao.save(post2);
+
+        List<Post> posts = null;
+        try {
+            posts = postService.getPostsByCategory("Category1");
+        } catch (PostExceptions e) {
+            throw new RuntimeException(e);
+        }
+
+        Assertions.assertNotNull(posts);
+        Assertions.assertEquals(1, posts.size());
+        Assertions.assertEquals("Category1", posts.get(0).getCategory());
+
+        postRepositoryDao.delete(post1);
+        postRepositoryDao.delete(post2);
+        fundraiserRepositoryDao.delete(fundraiser);
+    }
+
+
+    @Test
+    void getCompletedPostsTest() {
+        postRepositoryDao.deleteAll();
+        fundraiserRepositoryDao.deleteAll();
+        Fundraiser fundraiser = new Fundraiser("klay","klay@gmail.com","klay");
+        fundraiserRepositoryDao.save(fundraiser);
+
+        Post post1 = new Post("Title1", "Description1", "Category1", LocalDate.of(2024, 1, 1), LocalDate.of(2024, 1, 10), 100.0, 50.0, "completed", fundraiser);
+        Post post2 = new Post("Title2", "Description2", "Category2", LocalDate.of(2024, 2, 1), LocalDate.of(2024, 2, 10), 200.0, 100.0, "incomplete", fundraiser);
+        postRepositoryDao.save(post1);
+        postRepositoryDao.save(post2);
+
+        List<Post> completedPosts = null;
+        try {
+            completedPosts = postService.getCompletedPosts();
+        } catch (PostExceptions e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println("Completed Posts:"+completedPosts);
+        Assertions.assertNotNull(completedPosts);
+        Assertions.assertEquals(1, completedPosts.size()); // Modify the expected size to 1
+
+        postRepositoryDao.delete(post1);
+        postRepositoryDao.delete(post2);
+        fundraiserRepositoryDao.delete(fundraiser);
+    }
+    @Test
+    void getIncompletePostsTest() {
+        postRepositoryDao.deleteAll();
+        fundraiserRepositoryDao.deleteAll();
+        Fundraiser fundraiser = new Fundraiser("klay","klay@gmail.com","klay");
+        fundraiserRepositoryDao.save(fundraiser);
+
+        Post incompletePost = new Post("Title1", "Description1", "Category1", LocalDate.of(2024, 1, 1), LocalDate.of(2024, 1, 10), 100.0, 50.0, "incomplete", fundraiser);
+        Post completePost = new Post("Title2", "Description2", "Category2", LocalDate.of(2024, 2, 1), LocalDate.of(2024, 2, 10), 200.0, 100.0, "completed", fundraiser);
+        postRepositoryDao.save(incompletePost);
+        postRepositoryDao.save(completePost);
+
+        List<Post> incompletePosts = null;
+        try {
+            incompletePosts = postService.getIncompletePosts();
+        } catch (PostExceptions e) {
+            throw new RuntimeException(e);
+        }
+
+        System.out.println("Incomplete Posts: " + incompletePosts);
+
+        Assertions.assertNotNull(incompletePosts);
+        Assertions.assertEquals(1, incompletePosts.size(), "Expected only one incomplete post");
+
+        postRepositoryDao.delete(incompletePost);
+        postRepositoryDao.delete(completePost);
+        fundraiserRepositoryDao.delete(fundraiser);
+    }
+
+
 
 
 

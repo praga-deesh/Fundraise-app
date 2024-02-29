@@ -8,4 +8,7 @@ public interface DonorRepositoryDao extends JpaRepository<Donor,Integer>
 {
     Optional<Donor> findByEmail(String email);
 
+    Donor findDonorByAccountId(String accountId);
+
 }
+
