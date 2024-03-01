@@ -48,6 +48,26 @@ public class PaymentServiceImpl implements PaymentService{
         postRepositoryDao.save(toAccount);
         Payment newPayment = new Payment(fromAccount.getAccountId(), toAccount.getDonationAccountId(),toAccount.getId(),transferAmount, LocalDateTime.now(),"Success", fromAccount);
         paymentRepositoryDao.save(newPayment);
+        if(newPayment.getStatus().equalsIgnoreCase("Success"))
+            if(toAccount.getAmountCollected().equals(toAccount.getAmountRequested()))
+                toAccount.setStatus("completed");
+        postRepositoryDao.save(toAccount);
         return newPayment.getStatus();
     }
+
+
+    @Override
+    public Payment findPaymentByDonorsId(Integer donorId) throws PaymentExceptions {
+        return this.paymentRepositoryDao.findPaymentByDonorsId(donorId);
+    }
+
+    @Override
+    public Payment findPaymentByDonationPostId(Integer donationPostId) throws PaymentExceptions {
+        return this.paymentRepositoryDao.findPaymentByDonorsId(donationPostId);
+    }
+
+//    @Override
+//    public Payment findPaymentByDonationPostId(Integer donationPostId) throws PaymentExceptions {
+//        return this.paymentRepositoryDao.findPaymentByDonationPostId(donationPostId);
+//    }
 }

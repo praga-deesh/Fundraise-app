@@ -1,6 +1,7 @@
 package org.company.fundraisedemo.post;
 
 import org.company.fundraisedemo.donar.Donor;
+import org.company.fundraisedemo.payment.Payment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -8,4 +9,5 @@ import org.springframework.stereotype.Repository;
 public interface PostRepositoryDao extends JpaRepository<Post,Integer> {
 
     Post findPostByDonationAccountId(String accountId);
+
 }

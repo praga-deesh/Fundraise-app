@@ -87,5 +87,27 @@ public class Payment {
         this.donors = donors;
     }
 
+    public String getFromAccountid() {
+        return fromAccountid;
+    }
 
+    public void setFromAccountid(String fromAccountid) {
+        this.fromAccountid = fromAccountid;
+    }
+
+    public String getDonatedAccountId() {
+        return donatedAccountId;
+    }
+
+    public void setDonatedAccountId(String donatedAccountId) {
+        this.donatedAccountId = donatedAccountId;
+    }
+
+    public Integer getDonatedPostId() {
+        return donatedPostId;
+    }
+
+    public void setDonatedPostId(Integer donatedPostId) {
+        this.donatedPostId = donatedPostId;
+    }
 }
