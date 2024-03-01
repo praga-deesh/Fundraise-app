@@ -5,5 +5,8 @@ import org.company.fundraisedemo.post.PostExceptions;
 
 public interface PaymentService {
      String transaction(TransactionDto transaction) throws PaymentExceptions,DonorExceptions, PostExceptions;
+
+    Payment findPaymentByDonorsId(Integer donorId) throws PaymentExceptions;
+    Payment findPaymentByDonationPostId(Integer donationPostId) throws PaymentExceptions;
 }
 

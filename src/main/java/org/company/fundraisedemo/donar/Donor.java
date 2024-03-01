@@ -60,6 +60,14 @@ public class  Donor {
         this.password = password;
     }
 
+    public Donor(String name, String email, String password, String accountId, Double accountBalance) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.accountId = accountId;
+        this.accountBalance = accountBalance;
+    }
+
     public Donor() {
     }
 
