@@ -1,5 +1,8 @@
 package org.company.fundraisedemo.donar;
 
+import org.company.fundraisedemo.comment.Comment;
+import org.company.fundraisedemo.comment.CommentDto;
+import org.company.fundraisedemo.comment.CommentException;
 import org.company.fundraisedemo.comment.CommentService;
 
 
@@ -10,6 +13,7 @@ import org.company.fundraisedemo.post.Post;
 import org.company.fundraisedemo.post.PostExceptions;
 import org.company.fundraisedemo.post.PostService;
 
+import org.hibernate.annotations.Comments;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,8 +46,8 @@ public class DonorController {
     }
 
     @PostMapping("donor/bankdets/{id}")
-    public Donor updateDonorBankDets(@PathVariable Integer id, String accountId , Double balance) throws DonorExceptions{
-        return this.donorService.updateDonorBankDets(id,accountId,balance);
+    public Donor updateDonorBankDets(@PathVariable Integer id, String accountId, Double balance) throws DonorExceptions {
+        return this.donorService.updateDonorBankDets(id, accountId, balance);
     }
 
     @GetMapping("donor")
@@ -94,24 +98,57 @@ public class DonorController {
     }
 
 
-@GetMapping("donar/completedPosts")
-public List<Post> getCompletedPosts() throws PostExceptions {
-    return postService.getCompletedPosts();
-}
-@GetMapping("donar/inCompletedPosts")
-public List<Post> getIncompletedPosts() throws PostExceptions {
-    return postService.getIncompletePosts();
-}
+    @GetMapping("donar/completedPosts")
+    public List<Post> getCompletedPosts() throws PostExceptions {
+        return postService.getCompletedPosts();
+    }
 
-@GetMapping("donar/PostsByCategory/{category}")
-public List<Post> getPostsByCategory(@PathVariable String category) throws PostExceptions {
-    return postService.getPostsByCategory(category);
-}
+    @GetMapping("donar/inCompletedPosts")
+    public List<Post> getIncompletedPosts() throws PostExceptions {
+        return postService.getIncompletePosts();
+    }
+
+    @GetMapping("donar/PostsByCategory/{category}")
+    public List<Post> getPostsByCategory(@PathVariable String category) throws PostExceptions {
+        return postService.getPostsByCategory(category);
+    }
 
     @PatchMapping("payment")
     public String makePayment(@RequestBody TransactionDto transaction) throws PostExceptions, DonorExceptions, PaymentExceptions {
         return paymentService.transaction(transaction);
     }
+
+    @PostMapping("donor/addComment")
+    public Comment addComment(@RequestBody Comment comment) throws CommentException {
+        return commentService.addComment(comment);
+    }
+
+    @DeleteMapping("donor/deleteComment/{commentId}")
+    public Comment deleteCommentById(@PathVariable Integer commentId) throws CommentException {
+        return commentService.deleteCommentById(commentId);
+    }
+
+
+    @PatchMapping("donor/updateComment/{commentId}")
+    public Comment updateCommentById(@RequestBody Comment comment) throws CommentException {
+        return commentService.updateComment(comment);
+    }
+
+    @GetMapping("donor/getCommentById/{commentId}")
+    public Comment getCommentById(Integer id) throws CommentException {
+        return commentService.getCommentById(id);
+    }
+
+
+    @GetMapping("donor/getComments/{postId}")
+    public List<Comment> getComments(@PathVariable Integer postId) throws CommentException {
+        return commentService.getComments(postId);
+    }
+
+
+
+
+
 
 }
 
