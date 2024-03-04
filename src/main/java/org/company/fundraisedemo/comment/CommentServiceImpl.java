@@ -9,6 +9,7 @@ import javax.security.auth.login.AccountException;
 import java.util.ConcurrentModificationException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -16,7 +17,7 @@ public class CommentServiceImpl implements CommentService {
     @Autowired
     private CommentRepositoryDao commentRepositoryDao;
     @Override
-    public Comment addComment(Comment comment) {
+    public Comment addComment(Comment comment) throws CommentException{
         return commentRepositoryDao.save(comment);
     }
 
@@ -55,15 +56,16 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<Comment> getComments(Integer postId) throws CommentException {
-        List<Comment> commentList=this.commentRepositoryDao.findAll();
-        commentList = (List<Comment>) commentList.stream().map((p)->p.getPostId().equals(postId));
+        if (postId == null) {
+            throw new CommentException("Post ID cannot be null");
+        }
+        List<Comment> commentList = this.commentRepositoryDao.findAll();
+
+        commentList = commentList.stream().filter(p -> p.getPostId().equals(postId)).toList();
+
         if(commentList.isEmpty())
             throw new CommentException("Post doesn't exists:");
         return commentList;
-
-
-
     }
-
 
 }
