@@ -25,19 +25,21 @@ import java.util.List;
 public class DonorController {
 
     @Autowired
-    private CommentService commentService;
-    @Autowired
     private DonorService donorService;
 
-    @Autowired
-    private PostService postService;
 
-    @Autowired
-    private PaymentService paymentService;
+//    @Autowired
+//    private CommentService commentService;
+
+//    @Autowired
+//    private PostService postService;
+//
+//    @Autowired
+//    private PaymentService paymentService;
 
 
 
-    @PostMapping("donor/NewProfile")
+    @PostMapping("donor")
     public Donor createDonor(@RequestBody Donor newDonor) throws DonorExceptions {
         return this.donorService.createDonorProfile(newDonor);
     }
@@ -53,22 +55,22 @@ public class DonorController {
 //        return this.donorService.updateDonorBankDets(id, accountId, balance);
 //    }
 
-    @GetMapping("donor")
+    @GetMapping("donor/{id}")
     public Donor viewDonor(Integer id) throws DonorExceptions {
         return this.donorService.viewDonorById(id);
     }
 
-    @PatchMapping("donor/Name")
+    @PatchMapping("donor/name")
     public Donor updateDonorName(Integer id, String newName) throws DonorExceptions {
         return this.donorService.updateDonorNameById(id, newName);
     }
 
-    @PatchMapping("donor/Email")
+    @PatchMapping("donor/email")
     public Donor updateDonorEmail(Integer id, String newEmail) throws DonorExceptions {
         return this.donorService.updateDonorEmailById(id, newEmail);
     }
 
-    @PatchMapping("donor/Password")
+    @PatchMapping("donor/password")
     public Donor updateDonorPassword(Integer id, @RequestBody DonorLoginDto donorLoginDto) throws DonorExceptions {
         return this.donorService.updateDonorPasswordById(id, donorLoginDto.getPassword());
     }
