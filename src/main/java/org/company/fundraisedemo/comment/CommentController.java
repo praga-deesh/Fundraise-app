@@ -15,29 +15,29 @@ public class CommentController
     @Autowired
     private CommentService commentService;
 
-    @PostMapping("donor/addComment")
+    @PostMapping("comment")
     public Comment addComment(@RequestBody Comment comment) throws CommentException {
         return this.commentService.addComment(comment);
     }
 
-    @DeleteMapping("donor/deleteComment/{commentId}")
+    @DeleteMapping("comment/{commentId}")
     public Comment deleteCommentById(@PathVariable Integer commentId) throws CommentException {
         return this.commentService.deleteCommentById(commentId);
     }
 
 
-    @PatchMapping("donor/updateComment/{commentId}")
+    @PatchMapping("comment")
     public Comment updateCommentById(@RequestBody Comment comment) throws CommentException {
         return this.commentService.updateComment(comment);
     }
 
-    @GetMapping("donor/getCommentById/{commentId}")
+    @GetMapping("comment/{id}")
     public Comment getCommentById(Integer id) throws CommentException {
         return this.commentService.getCommentById(id);
     }
 
 
-    @GetMapping("donor/getComments/{postId}")
+    @GetMapping("comment/post/{postId}")
     public List<Comment> getComments(@PathVariable Integer postId) throws CommentException {
         return commentService.getComments(postId);
     }
