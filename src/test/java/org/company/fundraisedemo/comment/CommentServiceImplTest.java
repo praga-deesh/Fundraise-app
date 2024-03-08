@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import java.time.LocalDate;
+import java.util.List;
 
 @SpringBootTest
 
@@ -26,8 +27,6 @@ class CommentServiceImplTest {
     @Autowired
     private PostRepositoryDao postRepositoryDao;
 
-    @Autowired
-    private PostService postService;
 
     @Autowired
     private FundraiserRepositoryDao fundraiserRepositoryDao;
@@ -41,11 +40,21 @@ class CommentServiceImplTest {
 
     @Test
     void addComment()  {
-        Comment actualComment = new Comment(1, 3, 5, "good");
-        Comment expectedComment = null;
+        Post post;
+        Donor donor;
+        Fundraiser fundraiser;
+        Donor donorVal = new Donor("Asmithaa","asmithaa@gmail.com","string@123");
+        donor=donorRepositoryDao.save(donorVal);
+        Fundraiser fundraiserVal = new Fundraiser("klay","klay@gmail..com","klay");
+        fundraiser=fundraiserRepositoryDao.save(fundraiserVal);
+        Post postVal = new Post("Poverty","Expenses for food and shelter for poors","poverty", LocalDate.of(2024, 02, 27),LocalDate.of(2024,04,20),200000.0,0.0,"incomplete",fundraiser);
+        post=postRepositoryDao.save(postVal);
+        Comment actualCommentVal = new Comment(donor.getId(), fundraiser.getId(), post.getId(),"This is a comment" );
+        Comment actualComment = null;
+        Comment expectedComment ;
 
         try {
-            actualComment = commentService.addComment(actualComment);
+            actualComment = commentService.addComment(actualCommentVal);
         } catch (CommentException e) {
             throw new RuntimeException(e);
         }
@@ -53,143 +62,168 @@ class CommentServiceImplTest {
         expectedComment = commentRepositoryDao.findById(actualComment.getId()).get();
         Assertions.assertEquals(expectedComment.getId(), actualComment.getId());
         commentRepositoryDao.delete(actualComment);
+        postRepositoryDao.delete(post);
+        fundraiserRepositoryDao.delete(fundraiser);
+        donorRepositoryDao.delete(donor);
     }
 
     @Test
     void deleteCommentByIdTest() {
-        Comment comment, deletedComment;
-        Donor donor = new Donor("Asmithaa","asmithaa@gmail.com","string@123");
-        Fundraiser fundraiser = new Fundraiser("klay","klay@gmail..com","klay");
-        Post post = new Post("Poverty","Expenses for food and shelter for poors","poverty", LocalDate.of(2024, 02, 27),LocalDate.of(2024,04,20),200000.0,0.0,"incomplete",fundraiser);
-        comment = new Comment(donor.getId(), fundraiser.getId(), post.getId(),"This is a comment" );
+        Post post;
+        Donor donor;
+        Fundraiser fundraiser;
+        Donor donorVal = new Donor("Asmithaa","asmithaa@gmail.com","string@123");
+        donor=donorRepositoryDao.save(donorVal);
+        Fundraiser fundraiserVal = new Fundraiser("klay","klay@gmail..com","klay");
+        fundraiser=fundraiserRepositoryDao.save(fundraiserVal);
+        Post postVal = new Post("Poverty","Expenses for food and shelter for poors","poverty", LocalDate.of(2024, 02, 27),LocalDate.of(2024,04,20),200000.0,0.0,"incomplete",fundraiser);
+        post=postRepositoryDao.save(postVal);
+        Comment actualCommentVal = new Comment(donor.getId(), fundraiser.getId(), post.getId(),"This is a comment" );
+        Comment actualComment = null;
+        Comment deletedComment ;
 
         try {
-            comment = commentService.addComment(comment);
+            actualComment = commentService.addComment(actualCommentVal);
         } catch (CommentException e) {
             throw new RuntimeException(e);
         }
 
         try {
-            deletedComment = commentService.deleteCommentById(comment.getId());
+            deletedComment = commentService.deleteCommentById(actualComment.getId());
         } catch (CommentException e) {
             throw new RuntimeException(e);
         }
-        Assertions.assertEquals(comment.getId(), deletedComment.getId());
-        fundraiserRepositoryDao.delete(fundraiser);
+        Assertions.assertEquals(actualComment.getId(), deletedComment.getId());
         postRepositoryDao.delete(post);
+        fundraiserRepositoryDao.delete(fundraiser);
         donorRepositoryDao.delete(donor);
 
 
     }
-
-
     @Test
     void updateCommentTest() {
-        Comment comment, newComment, updatedComment;
-        Donor donor = new Donor("Asmithaa","asmithaa@gmail.com","string@123");
-        Fundraiser fundraiser = new Fundraiser("klay","klay@gmail..com","klay");
-        Post post = new Post("Poverty","Expenses for food and shelter for poors","poverty", LocalDate.of(2024, 02, 27),LocalDate.of(2024,04,20),200000.0,0.0,"incomplete",fundraiser);
-        comment = new Comment(1,donor.getId(), post.getId(),"This is a comment" );
+        Post post;
+        Donor donor;
+        Fundraiser fundraiser;
+        Donor donorVal = new Donor("Asmithaa","asmithaa@gmail.com","string@123");
+        donor=donorRepositoryDao.save(donorVal);
+        Fundraiser fundraiserVal = new Fundraiser("klay","klay@gmail..com","klay");
+        fundraiser=fundraiserRepositoryDao.save(fundraiserVal);
+        Post postVal = new Post("Poverty","Expenses for food and shelter for poors","poverty", LocalDate.of(2024, 02, 27),LocalDate.of(2024,04,20),200000.0,0.0,"incomplete",fundraiser);
+        post=postRepositoryDao.save(postVal);
+        Comment actualCommentVal = new Comment(donor.getId(), fundraiser.getId(), post.getId(),"This is a comment" );
+        Comment actualComment = null;
+        Comment updatedCommentVal;
+        Comment updatedComment ;
 
         try {
-            comment = commentService.addComment(comment);
+            actualComment = commentService.addComment(actualCommentVal);
         } catch (CommentException e) {
             throw new RuntimeException(e);
         }
 
-        newComment = new Comment(comment.getId(),donor.getId(), post.getId(),"This is a updated comment" );
+        updatedCommentVal = new Comment(actualComment.getId(),donor.getId(), post.getId(),"This is a updated comment" );
 
         try {
-            commentService.updateComment(newComment);
+            updatedComment=commentService.updateComment(updatedCommentVal);
         } catch (CommentException e) {
             throw new RuntimeException(e);
         }
 
-        try {
-            updatedComment = commentService.getCommentById(comment.getId());
-        } catch (CommentException e) {
-            throw new RuntimeException(e);
-        }
 
-        Assertions.assertEquals(newComment.getId(), updatedComment.getId());
-        Assertions.assertEquals(newComment.getCommentDescription(), updatedComment.getCommentDescription());
 
-        try {
-            commentService.deleteCommentById(comment.getId());
-        } catch (CommentException e) {
-            throw new RuntimeException(e);
-        }
+        Assertions.assertEquals(actualComment.getId(), updatedComment.getId());
+        Assertions.assertEquals(actualComment.getCommentDescription(), updatedComment.getCommentDescription());
 
-        fundraiserRepositoryDao.delete(fundraiser);
+        commentRepositoryDao.delete(actualComment);
+        commentRepositoryDao.delete(updatedComment);
         postRepositoryDao.delete(post);
+        fundraiserRepositoryDao.delete(fundraiser);
         donorRepositoryDao.delete(donor);
+
 
     }
 
     @Test
     void getCommentByIdTest() {
-        Comment comment = new Comment(1, 3, 5, "good");
-        Comment savedComment = null;
-        Comment fetchedComment = null;
+        Post post;
+        Donor donor;
+        Fundraiser fundraiser;
+        Donor donorVal = new Donor("Asmithaa","asmithaa@gmail.com","string@123");
+        donor=donorRepositoryDao.save(donorVal);
+        Fundraiser fundraiserVal = new Fundraiser("klay","klay@gmail..com","klay");
+        fundraiser=fundraiserRepositoryDao.save(fundraiserVal);
+        Post postVal = new Post("Poverty","Expenses for food and shelter for poors","poverty", LocalDate.of(2024, 02, 27),LocalDate.of(2024,04,20),200000.0,0.0,"incomplete",fundraiser);
+        post=postRepositoryDao.save(postVal);
+        Comment actualCommentVal = new Comment(donor.getId(), fundraiser.getId(), post.getId(),"This is a comment" );
+        Comment actualComment = null;
+        Comment expectedComment ;
 
         try {
-            savedComment = commentService.addComment(comment);
+            actualComment = commentService.addComment(actualCommentVal);
         } catch (CommentException e) {
             throw new RuntimeException(e);
         }
 
         try {
-
-            fetchedComment = commentService.getCommentById(savedComment.getId());
+            expectedComment = commentService.getCommentById(actualComment.getId());
         } catch (CommentException e) {
             throw new RuntimeException(e);
         }
 
 
-        Assertions.assertNotNull(fetchedComment, "Fetched comment should not be null");
-        Assertions.assertEquals(savedComment.getId(), fetchedComment.getId(), "Fetched comment ID should match saved comment ID");
 
-        commentRepositoryDao.delete(savedComment);
+        Assertions.assertEquals(actualComment.getId(), expectedComment.getId());
+
+        commentRepositoryDao.delete(actualComment);
+        postRepositoryDao.delete(post);
+        fundraiserRepositoryDao.delete(fundraiser);
+        donorRepositoryDao.delete(donor);
     }
-
-
 
 
 //    @Test
 //    public void testGetComments() {
+//        Post post;
+//        Donor donor;
+//        Fundraiser fundraiser;
+//        Donor donorVal = new Donor("Asmithaa","asmithaa@gmail.com","string@123");
+//        donor=donorRepositoryDao.save(donorVal);
+//        Fundraiser fundraiserVal = new Fundraiser("klay","klay@gmail..com","klay");
+//        fundraiser=fundraiserRepositoryDao.save(fundraiserVal);
+//        Post postVal = new Post("Poverty","Expenses for food and shelter for poors","poverty", LocalDate.of(2024, 02, 27),LocalDate.of(2024,04,20),200000.0,0.0,"incomplete",fundraiser);
+//        post=postRepositoryDao.save(postVal);
+//
+//
+//
 //        Comment commentOne, commentTwo;
-//
-//        Donor donor = new Donor("Asmithaa","asmithaa@gmail.com","string@123");
-//        donorRepositoryDao.save(donor);
-//
-//        Fundraiser fundraiser = new Fundraiser("klay", "klay@gmail.com", "klay");
-//        fundraiserRepositoryDao.save(fundraiser);
-//
-//
-//        Post post = new Post("Title1", "Description1", "Category1", LocalDate.of(2024, 1, 1), LocalDate.of(2024, 1, 10), 100.0, 50.0, "incomplete", fundraiser);
-//        postRepositoryDao.save(post);
 //
 //        commentOne = new Comment(donor.getId(), fundraiser.getId(), post.getId(),"This is a comment" );
 //        commentTwo=  new Comment(donor.getId(), fundraiser.getId(), post.getId(),"This is a second comment" );
 //
-//       commentRepositoryDao.save(commentOne);
-//       commentRepositoryDao.save(commentTwo);
-//
+//        try {
+//            commentService.addComment(commentOne);
+//            commentService.addComment(commentTwo);
+//        } catch (CommentException e) {
+//            throw new RuntimeException(e);
+//        }
 //
 //        List<Comment> actualComments ;
 //        try {
 //            actualComments = commentService.getComments(post.getId());
 //        } catch (CommentException e) {
-//            throw new RuntimeException("Error while fetching comments for post", e);
+//            throw new RuntimeException("Error while fetching comments for post");
 //        }
 //
 ////      Assertions.assertEquals(, actualComments.size());
-//        Assertions.assertTrue(actualComments.contains(commentOne));
+////        Assertions.assertTrue(actualComments.contains(commentOne));
 //        Assertions.assertTrue(actualComments.contains(commentTwo));
 //
 //        commentRepositoryDao.delete(commentOne);
 //        commentRepositoryDao.delete(commentTwo);
+//        postRepositoryDao.delete(post);
+//        fundraiserRepositoryDao.delete(fundraiser);
+//        donorRepositoryDao.delete(donor);
 //    }
 
 }
-
