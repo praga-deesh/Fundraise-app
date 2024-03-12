@@ -108,6 +108,22 @@ class DonorServiceImplTest {
         donorRepositoryDao.delete(actualDonar);
     }
 
+//    @Test
+//    void updateDonorEmailByIdTest() throws DonorExceptions {
+//        Donor actualDonarVal = new Donor("chann","bonnny@gmail.com","string@6600");
+//        Donor actualDonar = null;
+//        try {
+//            actualDonar = donorService.createDonorProfile(actualDonarVal);
+//        } catch (DonorExceptions e) {
+//            throw new RuntimeException(e);
+//        }
+//        Assertions.assertNotNull(donorService.updateDonorEmailById(actualDonar.getId(), actualDonar.getEmail()).getId());
+//        Assertions.assertEquals("chann",donorService.updateDonorEmailById(actualDonar.getId(), actualDonar.getEmail()).getName());
+//        Assertions.assertEquals("bonnny@gmail.com",donorService.updateDonorEmailById(actualDonar.getId(), actualDonar.getEmail()).getEmail());
+//        Assertions.assertEquals("string@6600",donorService.updateDonorEmailById(actualDonar.getId(), actualDonar.getEmail()).getPassword());
+//        donorRepositoryDao.delete(actualDonar);
+//    }
+
 
     @Test
     void updateDonorPasswordByIdTest() throws DonorExceptions {
