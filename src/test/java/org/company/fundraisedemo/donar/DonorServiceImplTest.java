@@ -145,23 +145,6 @@ class DonorServiceImplTest {
         });
 
     }
-//    @Test
-//    void deleteDonorByIdTest() throws DonorExceptions {
-//        Donor actualDonarVal = new Donor("channn","bonnnny@gmail.com","string@6600");
-//        Donor expectedDonor;
-//        Donor actualDonar = null;
-//        try {
-//            actualDonar = donorService.createDonorProfile(actualDonarVal);
-//        } catch (DonorExceptions e) {
-//            throw new RuntimeException(e);
-//        }
-//        expectedDonor=donorRepositoryDao.findById(actualDonar.getId()).get();
-//        donorService.deleteDonorById(actualDonar.getId());
-//        Donor finalActualDonar = actualDonar;
-//        assertThrows(DonorExceptions.class, () -> {
-//            donorService.deleteDonorById(finalActualDonar.getId());
-//        });
-//
-//    }
+
 
 }
