@@ -19,152 +19,115 @@ class DonorServiceImplTest {
     DonorRepositoryDao donorRepositoryDao;
     @Autowired
     DonorService donorService;
+
     @Test
-    void createDonorProfileTest() {
+    void createDonorProfileTest() throws DonorExceptions {
 
         Donor actualDonarVal = new Donor("Asmithaa","asmithaa@gmail.com","string@123");
-        Donor expectedDonar;
-        Donor actualDonar = null;
+        Donor actualDonar;
         try {
-            actualDonar = donorService.createDonorProfile(actualDonarVal);
+            actualDonar=(donorService.createDonorProfile(actualDonarVal));
         } catch (DonorExceptions e) {
             throw new RuntimeException(e);
         }
-        expectedDonar = donorRepositoryDao.findById(actualDonar.getId()).get();
-    //Assertions.assertNotNull(donorRepositoryDao.findById(expectedDonar.getId()));)
-        Assertions.assertEquals(expectedDonar.getId(), actualDonar.getId());
+
+        Assertions.assertNotNull(donorService.viewDonorById(actualDonar.getId()));
+        Assertions.assertEquals("Asmithaa",donorService.viewDonorById(actualDonar.getId()).getName());
+        Assertions.assertEquals("asmithaa@gmail.com",donorService.viewDonorById(actualDonar.getId()).getEmail());
+        Assertions.assertEquals("string@123",donorService.viewDonorById(actualDonar.getId()).getPassword());
         donorRepositoryDao.delete(actualDonar);
     }
+
+
     @Test
-    void loginDonorTest()
-    {
+    void loginDonorTest() throws DonorExceptions {
         Donor actualDonarVal = new Donor("shree","shree@gmail.com","string@800");
-        Donor expectedDonor;
         Donor actualDonar = null;
         try {
             actualDonar = donorService.createDonorProfile(actualDonarVal);
         } catch (DonorExceptions e) {
             throw new RuntimeException(e);
         }
-        expectedDonor=donorRepositoryDao.findByEmail(actualDonar.getEmail()).get();
-        Assertions.assertEquals(expectedDonor.getEmail(),actualDonar.getEmail());
-        Assertions.assertEquals(expectedDonor.getPassword(),actualDonar.getPassword());
+        Assertions.assertNotNull(donorService.viewDonorById(actualDonar.getId()));
+        Assertions.assertEquals(actualDonar.getId(),donorService.loginDonorProfile(actualDonarVal.getEmail(),actualDonar.getPassword()).getId());
+        Assertions.assertEquals("shree",donorService.viewDonorById(actualDonar.getId()).getName());
+        Assertions.assertEquals("shree@gmail.com",donorService.viewDonorById(actualDonar.getId()).getEmail());
+        Assertions.assertEquals("string@800",donorService.viewDonorById(actualDonar.getId()).getPassword());
         donorRepositoryDao.delete(actualDonar);
     }
+
+
     @Test
-    void viewDonorByIdTest()
-    {
+    void viewDonorByIdTest() throws DonorExceptions {
         Donor actualDonarVal = new Donor("shree","shree@gmail.com","string@800");
-        Donor expectedDonor;
         Donor actualDonar = null;
         try {
             actualDonar = donorService.createDonorProfile(actualDonarVal);
         } catch (DonorExceptions e) {
             throw new RuntimeException(e);
         }
-        expectedDonor=donorRepositoryDao.findByEmail(actualDonar.getEmail()).get();
-        Assertions.assertEquals(expectedDonor.getId(),actualDonar.getId());
+        Assertions.assertNotNull(donorService.viewDonorById(actualDonar.getId()).getId());
+        Assertions.assertEquals(actualDonar.getId(),donorService.viewDonorById(actualDonar.getId()).getId());
+        Assertions.assertEquals("shree",donorService.viewDonorById(actualDonar.getId()).getName());
+        Assertions.assertEquals("shree@gmail.com",donorService.viewDonorById(actualDonar.getId()).getEmail());
+        Assertions.assertEquals("string@800",donorService.viewDonorById(actualDonar.getId()).getPassword());
         donorRepositoryDao.delete(actualDonar);
     }
+
     @Test
     void updateDonorNameByIdTest() throws DonorExceptions {
-        Donor actualDonarVal = new Donor("chan","bonny@gmail.com","string@6600");
-        Donor expectedDonor;
+        Donor actualDonarVal = new Donor("test100","test100@gmail.com","string@6600");
         Donor actualDonar = null;
         try {
             actualDonar = donorService.createDonorProfile(actualDonarVal);
         } catch (DonorExceptions e) {
             throw new RuntimeException(e);
         }
-        Donor updatedDonor=donorService.updateDonorNameById(actualDonar.getId(),"bonyy");
-        expectedDonor=donorRepositoryDao.findById(updatedDonor.getId()).get();
-        Assertions.assertEquals(expectedDonor.getName(),updatedDonor.getName());
+        donorService.updateDonorNameById(actualDonar.getId(),actualDonar.getName());
+        Assertions.assertNotNull(donorService.updateDonorNameById(actualDonar.getId(), actualDonar.getName()).getId());
+        Assertions.assertEquals("test100",donorService.updateDonorNameById(actualDonar.getId(), actualDonar.getName()).getName());
+        Assertions.assertEquals("test100@gmail.com",donorService.updateDonorNameById(actualDonar.getId(), actualDonar.getName()).getEmail());
+        Assertions.assertEquals("string@6600",donorService.updateDonorNameById(actualDonar.getId(), actualDonar.getName()).getPassword());
         donorRepositoryDao.delete(actualDonar);
     }
-//    @Test
-//    void loginDonorProfileTest(){
-//        Donor donor=new Donor("kl","kl@gmail.com","kl");
-//        try { donorService.createDonorProfile(donor);
-//            Donor loggedInDonor = donorService.loginDonorProfile(donor.getEmail(), donor.getPassword());
-//            assertNotNull(loggedInDonor);
-//            assertEquals(donor.getName(), loggedInDonor.getName());
-//            assertEquals(donor.getEmail(), loggedInDonor.getEmail());
-//            assertEquals(donor.getPassword(), loggedInDonor.getPassword());
-//        }
-//        catch (DonorExceptions e)
-//        {
-//            fail("Exception thrown while logging in donor profile: " + e.getMessage());
-//        }
-//    }
-//    @Test
-//    void updateDonorNameByIdTest() {
-//        Donor donor = new Donor("John", "john@example.com", "password");
-//        donor = donorRepositoryDao.save(donor);
-//
-//        String newName = "John Doe";
-//        try {
-//            Donor updatedDonor = donorService.updateDonorNameById(donor.getId(), newName);
-//            assertEquals(newName, updatedDonor.getName());
-//
-//            Optional<Donor> optionalDonor = donorRepositoryDao.findById(donor.getId());
-//            assertTrue(optionalDonor.isPresent());
-//            assertEquals(newName, optionalDonor.get().getName());
-//        } catch (DonorExceptions e) {
-//            fail("Exception thrown while updating donor's name: " + e.getMessage());
-//        }
-//    }
-//    @Test
-//    void deleteDonorByIdTest() {
-//        Donor donor = new Donor("Jane", "jane@example.com", "password");
-//        donor = donorRepositoryDao.save(donor);
-//
-//        try {
-//            String result = donorService.deleteDonorById(donor.getId());
-//            assertEquals("Profile deleted successfully!!", result);
-//
-//            Optional<Donor> optionalDonor = donorRepositoryDao.findById(donor.getId());
-//            assertFalse(optionalDonor.isPresent());
-//        } catch (DonorExceptions e) {
-//            fail("Exception thrown while deleting donor profile: " + e.getMessage());
-//        }
-//    }
 
 
     @Test
     void updateDonorEmailByIdTest() throws DonorExceptions {
-        Donor actualDonarVal = new Donor("chan","bonny@gmail.com","string@6600");
-        Donor expectedDonor;
+        Donor actualDonarVal = new Donor("chann","bonnny@gmail.com","string@6600");
         Donor actualDonar = null;
         try {
             actualDonar = donorService.createDonorProfile(actualDonarVal);
         } catch (DonorExceptions e) {
             throw new RuntimeException(e);
         }
-        Donor updatedDonor=donorService.updateDonorEmailById(actualDonar.getId(),"buji@gmail.com");
-        expectedDonor=donorRepositoryDao.findById(updatedDonor.getId()).get();
-        Assertions.assertEquals(expectedDonor.getEmail(),updatedDonor.getEmail());
+        Assertions.assertNotNull(donorService.updateDonorEmailById(actualDonar.getId(), actualDonar.getEmail()).getId());
+        Assertions.assertEquals("chann",donorService.updateDonorEmailById(actualDonar.getId(), actualDonar.getEmail()).getName());
+        Assertions.assertEquals("bonnny@gmail.com",donorService.updateDonorEmailById(actualDonar.getId(), actualDonar.getEmail()).getEmail());
+        Assertions.assertEquals("string@6600",donorService.updateDonorEmailById(actualDonar.getId(), actualDonar.getEmail()).getPassword());
         donorRepositoryDao.delete(actualDonar);
     }
 
+
     @Test
     void updateDonorPasswordByIdTest() throws DonorExceptions {
-        Donor actualDonarVal = new Donor("chan","bonny@gmail.com","string@6600");
-        Donor expectedDonor;
+        Donor actualDonarVal = new Donor("channnn","bonnnny@gmail.com","string@6600");
         Donor actualDonar = null;
         try {
             actualDonar = donorService.createDonorProfile(actualDonarVal);
         } catch (DonorExceptions e) {
             throw new RuntimeException(e);
         }
-        Donor updatedDonor=donorService.updateDonorPasswordById(actualDonar.getId(),"buji@123");
-        expectedDonor=donorRepositoryDao.findById(updatedDonor.getId()).get();
-        Assertions.assertEquals(expectedDonor.getPassword(),updatedDonor.getPassword());
+        Assertions.assertNotNull(donorService.updateDonorPasswordById(actualDonar.getId(), actualDonar.getEmail()).getId());
+        Assertions.assertEquals("channnn",donorService.updateDonorPasswordById(actualDonar.getId(), actualDonar.getPassword()).getName());
+        Assertions.assertEquals("bonnnny@gmail.com",donorService.updateDonorPasswordById(actualDonar.getId(), actualDonar.getPassword()).getEmail());
+        Assertions.assertEquals("string@6600",donorService.updateDonorPasswordById(actualDonar.getId(), actualDonar.getPassword()).getPassword());
         donorRepositoryDao.delete(actualDonar);
     }
 
     @Test
     void deleteDonorByIdTest() throws DonorExceptions {
-        Donor actualDonarVal = new Donor("chan","bonny@gmail.com","string@6600");
+        Donor actualDonarVal = new Donor("channn","bonnnny@gmail.com","string@6600");
         Donor expectedDonor;
         Donor actualDonar = null;
         try {
@@ -180,4 +143,6 @@ class DonorServiceImplTest {
         });
 
     }
+
+
 }
