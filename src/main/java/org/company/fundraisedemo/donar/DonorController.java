@@ -4,11 +4,6 @@ package org.company.fundraisedemo.donar;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-<<<<<<< HEAD
-import java.util.List;
-@CrossOrigin("http://localhost:4200")
-=======
->>>>>>> main
 @RestController
 @CrossOrigin("http://localhost:4200/")
 public class DonorController {
