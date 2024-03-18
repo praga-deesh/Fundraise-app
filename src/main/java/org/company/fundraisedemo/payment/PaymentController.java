@@ -6,7 +6,7 @@ import org.company.fundraisedemo.donar.DonorService;
 import org.company.fundraisedemo.post.PostExceptions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-@CrossOrigin("http://localhost:4200")
+
 
 @RestController
 @CrossOrigin("http://localhost:4200/")
