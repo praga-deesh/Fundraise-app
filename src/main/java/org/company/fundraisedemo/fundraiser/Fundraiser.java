@@ -1,5 +1,6 @@
 package org.company.fundraisedemo.fundraiser;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.company.fundraisedemo.post.Post;
 
@@ -17,6 +18,7 @@ public class Fundraiser {
 
     @OneToMany
     @Column(nullable = true)
+    @JsonIgnore
     private List<Post> posts;
 
     public Fundraiser() {
@@ -31,6 +33,13 @@ public class Fundraiser {
     }
 
     public Fundraiser(String name, String email, String password) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
+
+    public Fundraiser(Integer id, String name, String email, String password) {
+        this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;

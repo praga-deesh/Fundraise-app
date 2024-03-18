@@ -1,5 +1,7 @@
 package org.company.fundraisedemo.post;
 
+import org.company.fundraisedemo.fundraiser.Fundraiser;
+import org.company.fundraisedemo.fundraiser.FundraiserExceptions;
 import org.company.fundraisedemo.fundraiser.FundraiserRepositoryDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -94,13 +96,12 @@ public class PostServiceImpl implements PostService{
 
 
     @Override
-    public List<Post> getPostById(Integer postId) throws PostExceptions {
-         List<Post> allPost=postRepositoryDao.findAll();
-         List<Post> result=allPost.stream().filter(post->post.getId().equals(postId)).toList();
-         if(result.isEmpty()){
-             throw new PostExceptions("Post Not Found:"+postId);
-         }
-        return result;
+    public Post getPostById(Integer postId) throws PostExceptions {
+        Optional<Post> postOpt = this.postRepositoryDao.findById(postId);
+        if (postOpt.isEmpty())
+            throw new PostExceptions("Profile doesn't exists:" + postId);
+        Post foundPost = postOpt.get();
+        return foundPost;
     }
 
     @Override

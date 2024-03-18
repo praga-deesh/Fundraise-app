@@ -6,6 +6,7 @@ import org.company.fundraisedemo.donar.DonorService;
 import org.company.fundraisedemo.post.PostExceptions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+@CrossOrigin("http://localhost:4200")
 
 @RestController
 public class PaymentController
@@ -21,7 +22,7 @@ public class PaymentController
         return this.donorService.updateDonorBankDets(id, accountId, balance);
     }
     @PatchMapping("payment/transaction")
-    public String makePayment(@RequestBody TransactionDto transaction) throws PostExceptions, DonorExceptions, PaymentExceptions {
+    public Payment makePayment(@RequestBody TransactionDto transaction) throws PostExceptions, DonorExceptions, PaymentExceptions {
         return paymentService.transaction(transaction);
     }
 }

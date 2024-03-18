@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin("http://localhost:4200")
 @RestController
 public class PostController {
     @Autowired
@@ -25,6 +26,11 @@ public class PostController {
         return this.postService.deletePostById(id);
     }
 
+    @GetMapping("post/donationAccountId")
+    public Post getPostByAccountId(String accountId) throws PostExceptions {
+        return this.postService.getPostByAccountId(accountId);
+    }
+
     @GetMapping("post/fundraiser/{id}")
     public List<Post> getPostsByFundraiserId(@PathVariable("id") Integer fundraiserId) throws PostExceptions {
         return this.postService.getPostsByFundraiserId(fundraiserId);
@@ -36,7 +42,7 @@ public class PostController {
         }
 
         @GetMapping("post/{postId}")
-        public List<Post> getPostById (@PathVariable Integer postId) throws PostExceptions {
+        public Post getPostById (@PathVariable Integer postId) throws PostExceptions {
             return postService.getPostById(postId);
 
         }

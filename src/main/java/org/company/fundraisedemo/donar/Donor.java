@@ -68,6 +68,15 @@ public class  Donor {
         this.accountBalance = accountBalance;
     }
 
+    public Donor(Integer id, String name, String email, String password, String accountId, Double accountBalance) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.accountId = accountId;
+        this.accountBalance = accountBalance;
+    }
+
     public Donor() {
     }
 

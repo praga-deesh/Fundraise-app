@@ -28,11 +28,13 @@ public class PaymentServiceImpl implements PaymentService{
     PaymentRepositoryDao paymentRepositoryDao;
 
     @Override
-    public String transaction(TransactionDto transaction) throws PaymentExceptions,DonorExceptions, PostExceptions {
+    public Payment transaction(TransactionDto transaction) throws PaymentExceptions,DonorExceptions, PostExceptions {
 
         Donor fromAccount = donorService.getDonorByBankAccountId(transaction.getSenderId());
         Post toAccount = postService.getPostByAccountId(transaction.getReceiverId());
         Double transferAmount = transaction.getAmount();
+        System.out.println(fromAccount);
+        System.out.println(toAccount);
 
         if(toAccount.getStatus().equalsIgnoreCase("complete"))
             throw new PaymentExceptions("The donation Post has recieved the Target Donation Amount");
@@ -52,7 +54,7 @@ public class PaymentServiceImpl implements PaymentService{
             if(toAccount.getAmountCollected().equals(toAccount.getAmountRequested()))
                 toAccount.setStatus("completed");
         postRepositoryDao.save(toAccount);
-        return newPayment.getStatus();
+        return newPayment;
     }
 
 

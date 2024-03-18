@@ -18,7 +18,7 @@ public interface PostService {
 
     List<Post> getPostsByTitle(String title) throws PostExceptions;
 
-    List<Post> getPostById(Integer postId) throws PostExceptions;
+    Post getPostById(Integer postId) throws PostExceptions;
 
     Post getPostByAccountId(String accountId) throws PostExceptions;
 

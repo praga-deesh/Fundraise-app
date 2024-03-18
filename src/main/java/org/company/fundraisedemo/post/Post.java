@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-public class Post {
+public class Post  {
 
     @Id
     @GeneratedValue
@@ -30,7 +30,7 @@ public class Post {
 //    private Double donationAccountBalance;
 
     @ManyToOne
-    @JoinColumn(name = "fundraiser_id", nullable = false)
+    @JoinColumn(name = "fundraiser_id")
     private Fundraiser fundraiser;
 
     @OneToMany
@@ -42,6 +42,35 @@ public class Post {
     private List<Comment> comments;
 
     public Post() {
+    }
+
+    public Post(Integer id, String title, String description, String category, LocalDate startDate, LocalDate endDate, Double amountRequested, Double amountCollected, String status, String donationAccountId) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.category = category;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.amountRequested = amountRequested;
+        this.amountCollected = amountCollected;
+        this.status = status;
+        this.donationAccountId = donationAccountId;
+    }
+
+    public Post(Integer id, String title, String description, String category, LocalDate startDate, LocalDate endDate, Double amountRequested, Double amountCollected, String status, String donationAccountId, Fundraiser fundraiser, List<Payment> donations, List<Comment> comments) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.category = category;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.amountRequested = amountRequested;
+        this.amountCollected = amountCollected;
+        this.status = status;
+        this.donationAccountId = donationAccountId;
+        this.fundraiser = fundraiser;
+        this.donations = donations;
+        this.comments = comments;
     }
 
     public Post(String title, String description, String category, LocalDate startDate, LocalDate endDate, Double amountRequested, Double amountCollected, String status, Fundraiser fundraiser) {
@@ -83,6 +112,19 @@ public class Post {
         this.fundraiser = fundraiser;
         this.donations = donations;
         this.comments = comments;
+    }
+
+    public Post(String title, String description, String category, LocalDate startDate, LocalDate endDate, Double amountRequested, Double amountCollected, String status, String donationAccountId, Fundraiser fundraiser) {
+        this.title = title;
+        this.description = description;
+        this.category = category;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.amountRequested = amountRequested;
+        this.amountCollected = amountCollected;
+        this.status = status;
+        this.donationAccountId = donationAccountId;
+        this.fundraiser = fundraiser;
     }
 
     public Integer getId() {

@@ -37,5 +37,9 @@ public class TransactionDto {
         this.receiverId = receiverId;
         this.amount = amount;
     }
+
+    public TransactionDto(Double amount) {
+        this.amount = amount;
+    }
 }
 
