@@ -7,6 +7,7 @@ import java.util.List;
 
 @CrossOrigin("http://localhost:4200")
 @RestController
+@CrossOrigin("http://localhost:4200/")
 public class PostController {
     @Autowired
     private PostService postService;
