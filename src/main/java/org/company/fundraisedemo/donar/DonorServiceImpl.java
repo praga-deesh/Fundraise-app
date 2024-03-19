@@ -1,8 +1,15 @@
 package org.company.fundraisedemo.donar;
 
+import org.company.fundraisedemo.payment.Payment;
+import org.company.fundraisedemo.payment.PaymentExceptions;
+import org.company.fundraisedemo.payment.PaymentRepositoryDao;
+import org.company.fundraisedemo.post.Post;
+import org.company.fundraisedemo.post.PostExceptions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -11,6 +18,9 @@ public class DonorServiceImpl implements DonorService
 
     @Autowired
     private DonorRepositoryDao donorRepositoryDao;
+
+    @Autowired
+    private PaymentRepositoryDao paymentRepositoryDao;
 
     @Override
     public Donor createDonorProfile(Donor newDonor) throws DonorExceptions {
@@ -100,6 +110,16 @@ public class DonorServiceImpl implements DonorService
         donor.setAccountBalance(balance);
         this.donorRepositoryDao.save(donor);
         return donor;
+    }
+
+    @Override
+    public List<Payment> viewDonationsById(Integer id) throws PaymentExceptions {
+        List<Payment> paymentList = this.paymentRepositoryDao.findAll();
+        paymentList = paymentList.stream().filter((p)->p.getDonors().getId().equals(id)).toList();
+        if(paymentList.isEmpty()) {
+            throw new PaymentExceptions("No Donations by this user");
+        }
+        return paymentList;
     }
 
 
