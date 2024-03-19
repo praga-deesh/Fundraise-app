@@ -1,8 +1,12 @@
 package org.company.fundraisedemo.donar;
 
 
+import org.company.fundraisedemo.payment.Payment;
+import org.company.fundraisedemo.payment.PaymentExceptions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @CrossOrigin("http://localhost:4200/")
@@ -48,6 +52,12 @@ public class DonorController {
     public String deleteDonor(Integer id) throws DonorExceptions {
         return this.donorService.deleteDonorById(id);
     }
+
+    @GetMapping("donations")
+    public List<Payment> viewDonationsById(Integer id) throws PaymentExceptions {
+        return this.donorService.viewDonationsById(id);
+    }
+
 
 }
 

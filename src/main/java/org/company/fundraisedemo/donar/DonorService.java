@@ -1,6 +1,11 @@
 package org.company.fundraisedemo.donar;
 
 
+import org.company.fundraisedemo.payment.Payment;
+import org.company.fundraisedemo.payment.PaymentExceptions;
+
+import java.util.List;
+
 public interface DonorService {
 
     Donor createDonorProfile(Donor newDonor) throws DonorExceptions;
@@ -20,4 +25,6 @@ public interface DonorService {
     String deleteDonorById(Integer id) throws DonorExceptions;
 
     Donor updateDonorBankDets(Integer id, String accountId, Double balance) throws DonorExceptions;
+
+    List<Payment> viewDonationsById(Integer id) throws PaymentExceptions;
 }
