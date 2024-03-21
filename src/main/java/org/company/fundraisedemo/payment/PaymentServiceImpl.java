@@ -9,9 +9,11 @@ import org.company.fundraisedemo.post.PostExceptions;
 import org.company.fundraisedemo.post.PostRepositoryDao;
 import org.company.fundraisedemo.post.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class PaymentServiceImpl implements PaymentService{
@@ -57,15 +59,25 @@ public class PaymentServiceImpl implements PaymentService{
         return newPayment;
     }
 
-
     @Override
-    public Payment findPaymentByDonorsId(Integer donorId) throws PaymentExceptions {
-        return this.paymentRepositoryDao.findPaymentByDonorsId(donorId);
+    public List<Payment> viewDonationsByDonorId(Integer donorId) throws PaymentExceptions {
+        List<Payment> paymentList = this.paymentRepositoryDao.findAll();
+        paymentList = paymentList.stream().filter((p)->p.getDonors().getId().equals(donorId)).toList();
+        if(paymentList.isEmpty()) {
+            throw new PaymentExceptions("No Donations by this user");
+        }
+        return paymentList;
     }
 
+
     @Override
-    public Payment findPaymentByDonationPostId(Integer donationPostId) throws PaymentExceptions {
-        return this.paymentRepositoryDao.findPaymentByDonorsId(donationPostId);
+    public List<Payment> findPaymentByDonationPostId(Integer donationPostId) throws PaymentExceptions {
+        List<Payment> paymentList= this.paymentRepositoryDao.findAll();
+        paymentList = paymentList.stream().filter((p)->p.getDonatedPostId().equals(donationPostId)).toList();
+        if(paymentList.isEmpty()) {
+            throw new PaymentExceptions("No Donations in this post");
+        }
+        return paymentList;
     }
 
 //    @Override

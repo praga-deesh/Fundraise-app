@@ -53,11 +53,6 @@ public class DonorController {
         return this.donorService.deleteDonorById(id);
     }
 
-    @GetMapping("donations")
-    public List<Payment> viewDonationsById(Integer id) throws PaymentExceptions {
-        return this.donorService.viewDonationsById(id);
-    }
-
 
 }
 
