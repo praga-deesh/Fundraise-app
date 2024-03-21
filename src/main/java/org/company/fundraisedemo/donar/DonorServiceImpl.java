@@ -19,8 +19,6 @@ public class DonorServiceImpl implements DonorService
     @Autowired
     private DonorRepositoryDao donorRepositoryDao;
 
-    @Autowired
-    private PaymentRepositoryDao paymentRepositoryDao;
 
     @Override
     public Donor createDonorProfile(Donor newDonor) throws DonorExceptions {
@@ -111,16 +109,5 @@ public class DonorServiceImpl implements DonorService
         this.donorRepositoryDao.save(donor);
         return donor;
     }
-
-    @Override
-    public List<Payment> viewDonationsById(Integer id) throws PaymentExceptions {
-        List<Payment> paymentList = this.paymentRepositoryDao.findAll();
-        paymentList = paymentList.stream().filter((p)->p.getDonors().getId().equals(id)).toList();
-        if(paymentList.isEmpty()) {
-            throw new PaymentExceptions("No Donations by this user");
-        }
-        return paymentList;
-    }
-
 
 }

@@ -26,5 +26,4 @@ public interface DonorService {
 
     Donor updateDonorBankDets(Integer id, String accountId, Double balance) throws DonorExceptions;
 
-    List<Payment> viewDonationsById(Integer id) throws PaymentExceptions;
 }

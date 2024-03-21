@@ -7,6 +7,8 @@ import org.company.fundraisedemo.post.PostExceptions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RestController
 @CrossOrigin("http://localhost:4200/")
@@ -26,4 +28,15 @@ public class PaymentController
     public Payment makePayment(@RequestBody TransactionDto transaction) throws PostExceptions, DonorExceptions, PaymentExceptions {
         return paymentService.transaction(transaction);
     }
+
+    @GetMapping("donations")
+    public List<Payment> viewDonationsById(Integer donorId) throws PaymentExceptions {
+        return this.paymentService.viewDonationsByDonorId(donorId);
+    }
+
+    @GetMapping("view/donations")
+    public List<Payment> findPaymentByDonationPostId(Integer donationPostId) throws PaymentExceptions {
+        return paymentService.findPaymentByDonationPostId(donationPostId);
+    }
+
 }
