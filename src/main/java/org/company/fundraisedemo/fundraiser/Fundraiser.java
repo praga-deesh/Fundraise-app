@@ -1,89 +1,44 @@
-package org.company.fundraisedemo.fundraiser;
+// Profile.js
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
-import org.company.fundraisedemo.post.Post;
+import React, { useState, useEffect } from 'react';
 
-import java.util.List;
+const Profile = () => {
+  const [posts, setPosts] = useState([]);
+  const user = JSON.parse(sessionStorage.getItem('user')); // Retrieve user from sessionStorage
 
-@Entity
-public class Fundraiser {
-    @Id
-    @GeneratedValue
-    private Integer id;
-
-    private String name;
-    private String email;
-    private String password;
-
-    @OneToMany
-    @Column(nullable = true)
-    @JsonIgnore
-    private List<Post> posts;
-
-    public Fundraiser() {
+  useEffect(() => {
+    if (!user) {
+      // Redirect to login if user is not logged in
+      navigate('/login');
+    } else {
+      // Fetch posts for the logged-in fundraiser
+      fetchPosts(user.id);
     }
+  }, [user]);
 
-    public Fundraiser(Integer id, String name, String email, String password, List<Post> posts) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.posts = posts;
+  const fetchPosts = async (fundraiserId) => {
+    try {
+      const response = await fetch(`http://localhost:8090/posts/fundraiser/${fundraiserId}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch posts');
+      }
+      const data = await response.json();
+      setPosts(data);
+    } catch (error) {
+      console.error('Error fetching posts:', error);
     }
+  };
 
-    public Fundraiser(String name, String email, String password) {
-        this.name = name;
-        this.email = email;
-        this.password = password;
-    }
+  return (
+    <div>
+      <h2>Profile Page</h2>
+      <ul>
+        {posts.map(post => (
+          <li key={post.id}>{post.title}</li>
+        ))}
+      </ul>
+    </div>
+  );
+};
 
-    public Fundraiser(Integer id, String name, String email, String password) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.password = password;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public List<Post> getPosts() {
-        return posts;
-    }
-
-    public void setPosts(List<Post> posts) {
-        this.posts = posts;
-    }
-
-    // changes made by Rishi
-}
+export default Profile;
